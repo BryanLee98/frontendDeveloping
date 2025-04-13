@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 export default {
   content: [
@@ -8,6 +8,11 @@ export default {
   ],
   theme: {
     extend: {
+      theme: {
+        fontFamily: {
+          pretendard: "var(--Pretendard)",
+        },
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -15,4 +20,4 @@ export default {
     },
   },
   plugins: [],
-} satisfies Config;
+} satisfies Config
