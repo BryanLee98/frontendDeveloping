@@ -19,3 +19,34 @@ export const CREATE_COMMENT = gql`
     }
   }
 `
+export const UPDATE_COMMENT = gql`
+  mutation UpdateBoardComment(
+    $updateBoardCommentInput: UpdateBoardCommentInput!
+    $password: String
+    $boardCommentId: ID!
+  ) {
+    updateBoardComment(
+      updateBoardCommentInput: $updateBoardCommentInput
+      password: $password
+      boardCommentId: $boardCommentId
+    ) {
+      _id
+      writer
+      contents
+      rating
+      user {
+        _id
+        email
+        name
+        picture
+        userPoint {
+          _id
+          amount
+        }
+      }
+      createdAt
+      updatedAt
+      deletedAt
+    }
+  }
+`
