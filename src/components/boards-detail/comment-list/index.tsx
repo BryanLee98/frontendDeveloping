@@ -1,67 +1,61 @@
 "use client"
 
 import styles from "./styles.module.css"
-import Image from "next/image"
 import { USE_COMMENT_LIST } from "./hooks"
-import { Rate } from "antd"
-
-const CommentImageSrc = {
-  profileIcon: {
-    src: require("@/images/detail_assets/profile-img.png"),
-    alt: "프로필 아이콘",
-  },
-  editIcon: {
-    src: require("@/images/detail_assets/edit comment icon.png"),
-    alt: "댓글 수정 아이콘",
-  },
-  closeIcon: {
-    src: require("@/images/detail_assets/close icon.png"),
-    alt: "댓글 삭제 아이콘",
-  },
-}
+import InfiniteScroll from "react-infinite-scroll-component"
+import COMMENT_ITEM from "../comment-list-item"
 
 const COMMENT_LIST_COMPO = () => {
-  const { data } = USE_COMMENT_LIST()
+  const { data, hasMore, setHasMore, fetchMore } = USE_COMMENT_LIST()
+
+  const fetchData = () => {
+    if (data === undefined) return
+    fetchMore({
+      variables: {
+        page: Math.ceil((data?.fetchBoardComments.length ?? 10) / 10) + 1,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fetchBoardComments.length) {
+          setHasMore(false)
+          // return prev;
+          return {
+            fetchBoardComments: [...prev.fetchBoardComments],
+          }
+        }
+        return {
+          fetchBoardComments: [
+            ...prev.fetchBoardComments,
+            ...fetchMoreResult.fetchBoardComments,
+          ],
+        }
+      },
+    })
+  }
+
   return (
     <div className={styles.commentListBody}>
       <div className={styles.commentListContainer}>
-        {/* 여기에 반목문 map을 활용한 댓글 보이기 */}
-        {data?.fetchBoardComments.map((el, index: number) => (
-          <div key={el?._id}>
-            <div className={styles.listBody}>
-              <div className={styles.listTitle}>
-                <div className={styles.forwardTitle}>
-                  <Image
-                    src={CommentImageSrc.profileIcon.src}
-                    alt={CommentImageSrc.profileIcon.alt}
-                  />
-                  <div className={styles.forwardTitleText}>{el?.writer}</div>
-                  <Rate disabled allowHalf defaultValue={el?.rating} />
-                </div>
-                <div>
-                  <div className={styles.backTitle}>
-                    <Image
-                      src={CommentImageSrc.editIcon.src}
-                      alt={CommentImageSrc.editIcon.alt}
-                    />
-                    <Image
-                      src={CommentImageSrc.closeIcon.src}
-                      alt={CommentImageSrc.closeIcon.alt}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className={styles.commentText}>{el?.contents}</div>
-              <div className={styles.commentDate}>
-                {el?.createdAt.split("T")[0]}
-              </div>
-            </div>
-            {/* 맨 밑 댓글에는 선이 없도록 */}
-            {index + 1 !== data?.fetchBoardComments.length && (
-              <div className={styles.border}> </div>
-            )}
-          </div>
-        ))}
+        <InfiniteScroll
+          next={fetchData}
+          hasMore={hasMore}
+          loader={<h3>댓글 로딩중...</h3>}
+          dataLength={data?.fetchBoardComments.length ?? 0}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>마지막 댓글입니다.</b>
+            </p>
+          }
+        >
+          {/* 여기에 반목문 map을 활용한 댓글 보이기 */}
+          {data?.fetchBoardComments.map((el, index: number) => (
+            <COMMENT_ITEM
+              el={el}
+              index={index}
+              key={el._id}
+              length={data?.fetchBoardComments.length ?? 0}
+            />
+          ))}
+        </InfiniteScroll>
       </div>
     </div>
   )
