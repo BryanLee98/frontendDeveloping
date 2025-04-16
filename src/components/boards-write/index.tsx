@@ -15,10 +15,8 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
     youtubeLink,
     detailAddress,
     data,
-    name,
+    inputs,
     password,
-    title,
-    context,
     nameError,
     passwordError,
     titleError,
@@ -31,10 +29,8 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
     handleOk,
     handleCancel,
     onToggleAddressModal,
-    onChangeName,
+    onChangeInputs,
     onChangePassword,
-    onChangeTitle,
-    onChangeContext,
     onClickEnroll,
     onChangeDetailAddress,
     onChangeYoutubeLink,
@@ -60,16 +56,17 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                 <span className={styles.essentialFill}>*</span>
               </div>
               <input
+                id="name"
                 className={
                   props.isEdit ? styles.disabled_input : styles.enrollInput
                 }
                 disabled={isEdit}
                 defaultValue={
-                  props.isEdit ? data?.fetchBoard.writer ?? "" : name
+                  props.isEdit ? data?.fetchBoard.writer ?? "" : inputs.name
                 }
                 type="text"
                 placeholder="작성자 명을 입력하세요."
-                onChange={onChangeName}
+                onChange={onChangeInputs}
               />
               <div className={styles.errorText}>{nameError}</div>
             </div>
@@ -100,11 +97,12 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
               <span className={styles.essentialFill}>*</span>
             </div>
             <input
+              id="title"
               className={styles.enrollInput}
-              value={title}
+              defaultValue={isEdit ? data?.fetchBoard.title : inputs.title}
               type="text"
               placeholder="제목을 입력하세요."
-              onChange={onChangeTitle}
+              onChange={onChangeInputs}
             />
             <div className={styles.errorText}>{titleError}</div>
           </div>
@@ -117,11 +115,14 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
               <span className={styles.essentialFill}>*</span>
             </div>
             <input
+              id="content"
               className={`${styles.enrollInput} ${styles.enrollTextArea}`}
-              defaultValue={props.isEdit ? data?.fetchBoard?.contents : context}
+              defaultValue={
+                props.isEdit ? data?.fetchBoard?.contents : inputs.content
+              }
               type="text"
               placeholder="내용을 입력하세요."
-              onChange={onChangeContext}
+              onChange={onChangeInputs}
             />
             <div className={styles.errorText}>{contextError}</div>
           </div>

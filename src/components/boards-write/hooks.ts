@@ -8,7 +8,6 @@ import {
   UpdateBoardDocument,
 } from "@/commons/graphql/graphql"
 import { Address } from "react-daum-postcode"
-import { UPDATE_BOARD } from "./queries"
 
 export const USE_BOARD_WRITE = (isEdit: boolean) => {
   const router = useRouter()
@@ -26,10 +25,12 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
   const [targetId, setTargetId] = useState(editId)
 
   //일반 상태를 저장할 변수
-  const [name, setName] = useState("")
+  const [inputs, setInputs] = useState({
+    name: "",
+    title: "",
+    content: "",
+  })
   const [password, setPassword] = useState("")
-  const [title, setTitle] = useState("")
-  const [context, setContext] = useState("")
   const [youtubeLink, setYoutubeLink] = useState("")
 
   //주소
@@ -39,8 +40,11 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
 
   useEffect(() => {
     if (isEdit && data) {
-      setTitle(data.fetchBoard.title || "")
-      setContext(data.fetchBoard.contents || "")
+      setInputs({
+        name: data.fetchBoard.writer || "",
+        title: data.fetchBoard.title || "",
+        content: data.fetchBoard.contents || "",
+      })
       setYoutubeLink(data.fetchBoard.youtubeUrl || "")
       setAddress(data.fetchBoard.boardAddress?.address || "")
       setDetailAddress(data.fetchBoard.boardAddress?.addressDetail || "")
@@ -63,31 +67,18 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   //값이 없을 때에는 변경이 불가능하도록
-  const isButtonDisabled = !name || !password || !title || !context
+  const isButtonDisabled = !inputs || !password
 
   //각 인풋마다 입력된 값을 변수에 다시 업데이트
-  const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value)
-    if (event.target.value && password && title && context)
-      return setIsActive(true)
-    setIsActive(false)
+  const onChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputs({
+      ...inputs,
+      [event.target.id]: event.target.value,
+    })
   }
+
   const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
-    if (name && event.target.value && title && context) return setIsActive(true)
-    setIsActive(false)
-  }
-  const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
-    if (name && password && event.target.value && context)
-      return setIsActive(true)
-    setIsActive(false)
-  }
-  const onChangeContext = (event: ChangeEvent<HTMLInputElement>) => {
-    setContext(event.target.value)
-    if (name && password && title && event.target.value)
-      return setIsActive(true)
-    setIsActive(false)
   }
 
   const onChangeDetailAddress = (event: ChangeEvent<HTMLInputElement>) => {
@@ -117,39 +108,40 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
       let haveError = false
 
       console.log(data)
-
-      if (name.trim() === "") {
+      if (inputs.name.trim() === "") {
         setNameError("필수 입력 사항입니다.")
         haveError = true
       } else {
         setNameError("")
       }
-      if (password === "") {
+
+      if (password.length === 0) {
         setPasswordError("필수 입력 사항입니다.")
         haveError = true
       } else {
         setPasswordError("")
       }
-      if (title?.trim() === "") {
+      if (inputs.title?.trim() === "") {
         setTitleError("필수 입력 사항입니다.")
         haveError = true
       } else {
         setTitleError("")
       }
-      if (context?.trim() === "") {
+      if (inputs.content?.trim() === "") {
         setContextError("필수 입력 사항입니다.")
         haveError = true
       } else {
         setContextError("")
       }
+
       if (haveError === false) {
         const { data } = await createBoard({
           variables: {
             createBoardInput: {
-              writer: String(name),
+              writer: String(inputs.name),
               password: String(password),
-              title: String(title),
-              contents: String(context),
+              title: String(inputs.title),
+              contents: String(inputs.content),
               youtubeUrl: youtubeLink,
               boardAddress: {
                 zipcode: zipcode,
@@ -170,19 +162,13 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     // 글을 수정할 때
     else if (isEdit === true) {
       // 입력값이 비어있는 경우 수정 진행 불가
-      if (context?.trim() === "" && title?.trim() === "") {
+      if (inputs.content?.trim() === "" && inputs.title?.trim() === "") {
         setContextError("필수입력 사항입니다.")
         setTitleError("필수입력 사항입니다.")
         return
       }
-      if (context?.trim() === "") {
-        setContextError("필수입력 사항입니다.")
-        return
-      }
-      if (title?.trim() === "") {
-        setTitleError("필수입력 사항입니다.")
-        return
-      }
+      if (inputs.content?.trim() === "") setContextError("필수입력 사항입니다.")
+      if (inputs.title?.trim() === "") setTitleError("필수입력 사항입니다.")
 
       //초기에 입력한 비밀번호와 일치하는지 확인
       const passwordInput = prompt(
@@ -195,11 +181,14 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
           addressDetail: "",
         },
       }
-      if (title?.trim() && title !== data?.fetchBoard?.title) {
-        updateInput.title = title
+      if (inputs.title?.trim() && inputs.title !== data?.fetchBoard?.title) {
+        updateInput.title = inputs.title
       }
-      if (context?.trim() && context !== data?.fetchBoard?.contents) {
-        updateInput.contents = context
+      if (
+        inputs.content?.trim() &&
+        inputs.content !== data?.fetchBoard?.contents
+      ) {
+        updateInput.contents = inputs.content
       }
 
       if (youtubeLink?.trim() && youtubeLink !== data?.fetchBoard?.youtubeUrl) {
@@ -288,10 +277,8 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     address,
     detailAddress,
     data,
-    name,
+    inputs,
     password,
-    title,
-    context,
     nameError,
     passwordError,
     titleError,
@@ -305,10 +292,8 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     handleOk,
     handleCancel,
     onToggleAddressModal,
-    onChangeName,
+    onChangeInputs,
     onChangePassword,
-    onChangeTitle,
-    onChangeContext,
     onClickEnroll,
     onChangeDetailAddress,
     onChangeYoutubeLink,
