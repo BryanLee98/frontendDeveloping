@@ -1,10 +1,9 @@
 .Layout {
   width: 100%;
-  max-width: 1280px;
+
   height: 80px;
   gap: 10px;
-  padding-right: 0px;
-  padding-left: 400px;
+  padding: 0px 100px;
   display: flex;
   justify-content: column;
   align-items: center;
@@ -14,17 +13,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-self: stretch;
   width: 100%;
-  height: 80px;
-  max-width: 1280px;
-  padding-top: 25px;
-  padding-bottom: 20px;
 }
 
 .TapWrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 364px;
   height: 40px;
   gap: 24px;
@@ -32,7 +27,8 @@
 
 .TapContents {
   display: flex;
-  width: 284px;
+  align-items: center;
+  width: 100%;
   height: 40px;
   gap: 16px;
   border-radius: 8px;
@@ -42,8 +38,7 @@
   color: var(--gray-800, #333);
   text-align: center;
 
-  /* me_16_24 */
-  font-family: "Pretendard Variable";
+  /* font-family: "Pretendard Variable"; */
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -52,7 +47,8 @@
 
 .ProfileWrapper {
   display: flex;
-  width: 68;
-  height: 40;
+
+  /* width: 68;
+  height: 40; */
   gap: 8px;
 }
