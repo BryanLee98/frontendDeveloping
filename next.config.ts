@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     async rewrites() {
     return [
       {
-        source: "http://localhost:3000",
+        source: "https://marketpageproject.vercel.app/",
         destination: `https://main-practice.codebootcamp.co.kr/graphql`,
       },
     ]
