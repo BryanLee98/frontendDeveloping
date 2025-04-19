@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
     async rewrites() {
     return [
       {
-        source: "https://marketpageproject.vercel.app/",
-        destination: `https://main-practice.codebootcamp.co.kr/graphql`,
+        source: "/graphql",
+        destination: "https://main-practice.codebootcamp.co.kr/graphql",
       },
     ]
   },
