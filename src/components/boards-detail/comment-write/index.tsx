@@ -10,7 +10,11 @@ import { IPropsCommentWrite } from "./types"
 
 const Context = createContext({ name: "Default" })
 
-const COMMENT_WRITE_COMPO = ({ isEdit, el, setIsEdit }: IPropsCommentWrite) => {
+const COMMENT_WRITE_COMPO: any = ({
+  isEdit,
+  el,
+  setIsEdit,
+}: IPropsCommentWrite) => {
   const {
     newComment,
     writer,
