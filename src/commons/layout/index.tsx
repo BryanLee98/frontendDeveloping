@@ -12,13 +12,13 @@ const LAYOUT = (props: IHeaderChildren) => {
 
   const URL_Convert = () => {
     //1. 일단 pathName에서 edit이 포함되어 있을 경우에
-    if (pathName.includes(`/edit`)) {
+    if (pathName && pathName.includes(`/edit`)) {
       //2. `/boards/[boardID]/edit`으로 변환해줘라
       pathName = `/boards/[boardID]/edit`
     }
   }
 
-  if (pathName.includes("edit")) URL_Convert()
+  if (pathName && pathName.includes("edit")) URL_Convert()
 
   const isHiddenHeader = HIDDEN_HEADER.includes(pathName)
   return (
