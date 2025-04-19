@@ -5,10 +5,13 @@
 
 .Layout {
   display: flex;
-  width: 1280px;
-  padding: 40px 320px;
+  width: 100%;
+  min-width: 1280px;
+  padding: 0px 20px;
   justify-content: center;
   flex-direction: column;
+  gap: 40px;
+  align-items: center;
 }
 
 .titleTextStyle {
