@@ -8,7 +8,7 @@ export const USE_PAGE_DETAIL = () => {
   const router = useRouter()
   const params = useParams()
   const [youtubeID, setYoutubeID] = useState("")
-  const id = params.boardID
+  const id = params?.boardID
 
   const { data } = useQuery(FetchBoardDocument, {
     variables: {
@@ -21,7 +21,7 @@ export const USE_PAGE_DETAIL = () => {
   }
 
   const OnClickEditPage = () => {
-    router.push(`${params.boardID}/edit`)
+    router.push(`${params?.boardID}/edit`)
   }
   const onClickListPage = () => {
     router.push(`/boards/`)
