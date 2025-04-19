@@ -8,7 +8,17 @@ export const CREATE_BOARD = gql`
       writer
       title
       contents
+      youtubeUrl
+      likeCount
+      images
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
       createdAt
+      updatedAt
+      deletedAt
     }
   }
 `
@@ -20,18 +30,24 @@ export const FETCH_BOARD = gql`
       writer
       title
       contents
-    }
-  }
-`
-
-export const FETCH_BOARDS = gql`
-  query {
-    fetchBoards {
-      _id
-      writer
-      title
-      contents
+      youtubeUrl
+      likeCount
+      dislikeCount
+      images
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
+      user {
+        _id
+        email
+        name
+        picture
+      }
       createdAt
+      updatedAt
+      deletedAt
     }
   }
 `
@@ -58,6 +74,11 @@ export const UPDATE_BOARD = gql`
       createdAt
       updatedAt
       deletedAt
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `

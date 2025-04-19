@@ -1,30 +1,44 @@
 "use client"
+import "@ant-design/v5-patch-for-react-19"
 import styles from "./styles.module.css"
-import addImage from "../../00_images/asset/add_image.png"
+import addImage from "../../images/asset/add_image.png"
 import Image from "next/image"
-import { USE_BOARD_WRITE } from "./hooks"
 import { IPageWriteProps } from "./types"
+import { Button, Modal } from "antd"
+import DaumPostcodeEmbed from "react-daum-postcode"
+import { USE_BOARD_WRITE } from "./hooks"
 
 const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
   const { isEdit } = props
   const {
+    address,
+    youtubeLink,
+    detailAddress,
     data,
-    name,
+    inputs,
     password,
-    title,
-    context,
     nameError,
     passwordError,
     titleError,
     contextError,
-    onChangeName,
+    isButtonDisabled,
+    isModalOpen,
+    modalContent,
+    isAddressModalOpen,
+    zipcode,
+    handleOk,
+    handleCancel,
+    onToggleAddressModal,
+    onChangeInputs,
     onChangePassword,
-    onChangeTitle,
-    onChangeContext,
     onClickEnroll,
+    onChangeDetailAddress,
+    onChangeYoutubeLink,
     enrollButtonStyle,
     onClickCancel,
+    handleComplete,
   } = USE_BOARD_WRITE(isEdit)
+
   return (
     <>
       <div className={styles.Layout}>
@@ -42,14 +56,17 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                 <span className={styles.essentialFill}>*</span>
               </div>
               <input
+                id="name"
                 className={
                   props.isEdit ? styles.disabled_input : styles.enrollInput
                 }
-                disabled={props.isEdit}
-                defaultValue={props.isEdit ? data?.fetchBoard?.writer : name}
+                disabled={isEdit}
+                value={
+                  props.isEdit ? data?.fetchBoard.writer ?? "" : inputs.name
+                }
                 type="text"
                 placeholder="작성자 명을 입력하세요."
-                onChange={onChangeName}
+                onChange={onChangeInputs}
               />
               <div className={styles.errorText}>{nameError}</div>
             </div>
@@ -62,7 +79,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                 className={
                   props.isEdit ? styles.disabled_input : styles.enrollInput
                 }
-                disabled={props.isEdit}
+                disabled={isEdit}
                 defaultValue={props.isEdit ? "*********" : password}
                 type="password"
                 placeholder="비밀번호를 입력하세요."
@@ -80,11 +97,12 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
               <span className={styles.essentialFill}>*</span>
             </div>
             <input
+              id="title"
               className={styles.enrollInput}
-              defaultValue={props.isEdit ? data?.fetchBoard?.title : title}
+              defaultValue={isEdit ? data?.fetchBoard.title : inputs.title}
               type="text"
               placeholder="제목을 입력하세요."
-              onChange={onChangeTitle}
+              onChange={onChangeInputs}
             />
             <div className={styles.errorText}>{titleError}</div>
           </div>
@@ -97,11 +115,14 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
               <span className={styles.essentialFill}>*</span>
             </div>
             <input
+              id="content"
               className={`${styles.enrollInput} ${styles.enrollTextArea}`}
-              defaultValue={props.isEdit ? data?.fetchBoard?.contents : context}
+              defaultValue={
+                props.isEdit ? data?.fetchBoard?.contents : inputs.content
+              }
               type="text"
               placeholder="내용을 입력하세요."
-              onChange={onChangeContext}
+              onChange={onChangeInputs}
             />
             <div className={styles.errorText}>{contextError}</div>
           </div>
@@ -111,36 +132,59 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
             <div className={styles.textStyle}>주소</div>
             <div className={styles.addressSearch}>
               <input
+                readOnly
+                value={zipcode}
+                id="zipcode-input"
                 className={styles.zipCodeInput}
                 type="text"
                 placeholder="012345"
               />
+
               <button
                 className={`${styles.addressButton} ${styles.buttonTextStyle}`}
+                onClick={onToggleAddressModal}
               >
                 우편번호 검색
               </button>
             </div>
             <input
+              value={address}
+              readOnly
               className={styles.enrollInput}
               type="text"
               placeholder="주소를 입력하세요."
             />
             <input
+              value={detailAddress}
+              id="detail-address-input"
               className={styles.enrollInput}
               type="text"
               placeholder="상세주소를 입력하세요."
+              onChange={onChangeDetailAddress}
             />
           </div>
+
+          {isAddressModalOpen && (
+            <Modal
+              open={isAddressModalOpen}
+              onCancel={onToggleAddressModal}
+              onOk={onToggleAddressModal}
+              footer={<></>}
+            >
+              <DaumPostcodeEmbed onComplete={handleComplete} />
+            </Modal>
+          )}
           <div className={styles.enrollBorder}></div>
 
           {/* 유튜브 링크 입력 */}
           <div className={styles.containerBox}>
             <div className="textStyle">유튜브 링크</div>
             <input
+              value={youtubeLink}
               className={styles.enrollInput}
               type="text"
               placeholder="링크를 입력하세요."
+              onChange={onChangeYoutubeLink}
             />
           </div>
           <div className={styles.enrollBorder}></div>
@@ -161,12 +205,16 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
             취소
           </button>
           <button
+            disabled={!isEdit && isButtonDisabled}
             className={`${styles.enrollButton} ${styles.buttonTextStyle}`}
             style={enrollButtonStyle}
             onClick={onClickEnroll}
           >
             {props.isEdit ? "수정하기" : "등록하기"}
           </button>
+          <Modal open={isModalOpen} onOk={handleOk}>
+            <p>{modalContent}</p>
+          </Modal>
         </div>
       </div>
     </>

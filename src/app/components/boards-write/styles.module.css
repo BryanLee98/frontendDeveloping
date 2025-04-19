@@ -185,7 +185,7 @@
   padding-bottom: 12px;
   padding-left: 16px;
   border-radius: 8px;
-  background: var(--blue, #2974e5);
+  background: var(--blue, rgb(57, 127, 233));
   color: white;
   box-shadow: 7px 7px 10px 1px #e7e7e7;
 }
