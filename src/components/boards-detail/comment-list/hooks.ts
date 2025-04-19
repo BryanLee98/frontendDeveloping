@@ -7,7 +7,7 @@ import { useState } from "react"
 
 export const USE_COMMENT_LIST = () => {
   const params = useParams()
-  const id = String(params.boardID)
+  const id = String(params?.boardID)
   const [hasMore, setHasMore] = useState<boolean>(true)
   const { data, fetchMore } = useQuery(FetchBoardCommentsDocument, {
     variables: {
