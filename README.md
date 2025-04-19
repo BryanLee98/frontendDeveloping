@@ -29,3 +29,5 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses 'Pretendard-Regular.wlff2' font. ('./src/app/fonts')
 
+you can browse with the link on the description
+
