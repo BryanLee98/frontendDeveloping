@@ -6,7 +6,7 @@ import Image from "next/image"
 import { IPageWriteProps } from "./types"
 import { Button, Modal } from "antd"
 import DaumPostcodeEmbed from "react-daum-postcode"
-import { USE_BOARD_WRITE } from "@/components/boards-write/hooks"
+import { USE_BOARD_WRITE } from "./hooks"
 
 const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
   const { isEdit } = props
