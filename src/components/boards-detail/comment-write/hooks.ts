@@ -19,7 +19,7 @@ export const USE_COMMENT_WRITE = ({
   el,
 }: IPropsCommentWrite) => {
   const params = useParams()
-  const id = params.boardID
+  const id = params?.boardID
   const [api, contextHolder] = notification.useNotification()
 
   const [newComment] = useMutation(CreateCommentDocument)
