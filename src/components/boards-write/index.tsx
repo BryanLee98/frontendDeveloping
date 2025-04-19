@@ -61,7 +61,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                   props.isEdit ? styles.disabled_input : styles.enrollInput
                 }
                 disabled={isEdit}
-                defaultValue={
+                value={
                   props.isEdit ? data?.fetchBoard.writer ?? "" : inputs.name
                 }
                 type="text"
