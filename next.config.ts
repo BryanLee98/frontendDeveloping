@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "http://localhost:3000",
-        destination: `https://marketpageproject.vercel.app`,
+        destination: `https://main-practice.codebootcamp.co.kr/graphql`,
       },
     ]
   },
