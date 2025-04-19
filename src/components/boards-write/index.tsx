@@ -3,10 +3,10 @@ import "@ant-design/v5-patch-for-react-19"
 import styles from "./styles.module.css"
 import addImage from "../../images/asset/add_image.png"
 import Image from "next/image"
-import { USE_BOARD_WRITE } from "./hooks"
 import { IPageWriteProps } from "./types"
 import { Button, Modal } from "antd"
 import DaumPostcodeEmbed from "react-daum-postcode"
+import { USE_BOARD_WRITE } from "./hooks"
 
 const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
   const { isEdit } = props
