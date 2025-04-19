@@ -12,7 +12,7 @@ import { Address } from "react-daum-postcode"
 export const USE_BOARD_WRITE = (isEdit: boolean) => {
   const router = useRouter()
   const params = useParams()
-  const editId = isEdit ? params.boardID : null
+  const editId = isEdit ? params?.boardID : null
 
   const [createBoard] = useMutation(CreateBoardDocument)
   const [updateBoard] = useMutation(UpdateBoardDocument)
