@@ -4,7 +4,7 @@ import React from "react"
 const NewPostPage = () => {
   return (
     <>
-      <API_BOARD_WRITE_COMPO />
+      <API_BOARD_WRITE_COMPO isEdit={false}/>
     </>
   )
 }
