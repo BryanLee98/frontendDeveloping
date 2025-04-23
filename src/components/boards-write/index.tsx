@@ -4,7 +4,7 @@ import styles from "./styles.module.css"
 import addImage from "../../images/asset/add_image.png"
 import Image from "next/image"
 import { IPageWriteProps } from "./types"
-import { Button, Modal } from "antd"
+import { Modal } from "antd"
 import DaumPostcodeEmbed from "react-daum-postcode"
 import { USE_BOARD_WRITE } from "./hooks"
 
@@ -27,7 +27,6 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
     isAddressModalOpen,
     zipcode,
     handleOk,
-    handleCancel,
     onToggleAddressModal,
     onChangeInputs,
     onChangePassword,

@@ -1,47 +1,46 @@
 "use client"
-import styles from "./styles.module.css"
-import InfiniteScroll from "react-infinite-scroll-component"
-import { USE_CAT_API_HOOKS } from "./hooks"
 
-const OPEN_API_COMPO = () => {
-  const {
-    images,
-    setImages,
-    hasMore,
-    setHasMore,
-    page,
-    setPage,
-    fetchMoreData,
-  } = USE_CAT_API_HOOKS()
+import { useRouter } from "next/navigation"
+import styles from "./styles.module.css"
+import { IOpenApiPageProps } from "./types"
+import { MouseEvent } from "react"
+
+const OPEN_API_PAGE_LIST_COMPONENT = (props: IOpenApiPageProps) => {
+  const router = useRouter()
+  const onClickMove = (event: MouseEvent<HTMLButtonElement>, id: string) => {
+    event.stopPropagation()
+    router.push(`/openapi/${id}`)
+  }
 
   return (
-    <div className={styles.app}>
-      <InfiniteScroll
-        dataLength={images.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={
-          <div className={styles.loadingIndicator}>Loading more cats...</div>
-        }
-        endMessage={
-          <div className={styles.endMessage}>You've seen all the cats! 😺</div>
-        }
-      >
-        <div className={styles.imageGrid}>
-          {images.map((image) => (
-            <div key={image.id} className={styles.imageContainer}>
-              <img
-                src={image.url}
-                alt="cat"
-                className={styles.catImage}
-                loading="lazy"
-              />
-            </div>
+    <>
+      <div className={styles.Layout}>
+        <div className={styles.ListContainer}>
+          <div className={styles.ListHeader}>
+            <div className={styles.HeaderNumber}>번호</div>
+            <div className={styles.HeaderTitle}>제목</div>
+            <div className={styles.headerWriter}>작성자</div>
+            <div className={styles.HeaderDate}>등록 날짜</div>
+          </div>
+          {props?.dataList?.map((item, index) => (
+            <button
+              key={item?.id || index}
+              onClick={(event) => onClickMove(event, item?.id)}
+            >
+              <div className={styles.ListItem}>
+                <div className={styles.ContentNumber}>{index + 1}</div>
+                <div className={styles.ContentTitle}>{item?.title}</div>
+                <div className={styles.ContentWriter}>{item?.writer}</div>
+                <div className={styles.ContentDate}>
+                  {(item?.date || "").split("T")[0]}
+                </div>
+              </div>
+            </button>
           ))}
         </div>
-      </InfiniteScroll>
-    </div>
+      </div>
+    </>
   )
 }
 
-export default OPEN_API_COMPO
+export default OPEN_API_PAGE_LIST_COMPONENT

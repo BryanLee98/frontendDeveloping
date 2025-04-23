@@ -1,9 +1,13 @@
 "use client"
 import styles from "./styles.module.css"
+import { app } from "@/commons/libraries/firebase"
+import { doc, DocumentData, getDoc, getFirestore } from "firebase/firestore"
+import { usePathname } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { USE_PAGE_DETAIL } from "./hooks"
-import { DislikeOutlined, LikeOutlined } from "@ant-design/icons"
 import { Tooltip } from "antd"
+import { DislikeOutlined, LikeOutlined } from "@ant-design/icons"
 import YouTube, { YouTubeProps } from "react-youtube"
 
 const boardDetailImg = {
@@ -37,16 +41,46 @@ const boardDetailImg = {
   },
 }
 
-const PAGE_DETAIL_COMPO = () => {
-  const {
-    data,
-    youtubeID,
-    setYoutubeID,
-    getYoutubeId,
-    OnClickEditPage,
-    onClickListPage,
-  } = USE_PAGE_DETAIL()
+const OPEN_API_PAGE_DETAIL_COMPONENT = () => {
+  const router = useRouter()
+  let pathName = usePathname()
+  console.log(pathName)
+  const fetchedDocumentId = pathName?.split("/")[2]
+  console.log(fetchedDocumentId)
+  const [documentData, setDocumentData] = useState<DocumentData>({})
+  const [youtubeID, setYoutubeID] = useState("")
+  const onClickListPage = () => {
+    router.push("/openapi")
+  }
 
+  const onClickEditPage = () => {
+    router.push(`/openapi/${fetchedDocumentId}/edit`)
+  }
+  useEffect(() => {
+    let isFetched = false // 데이터가 이미 조회되었는지 확인하는 플래그
+
+    const fetchDocument = async () => {
+      if (!fetchedDocumentId || isFetched) return // ID가 없거나 이미 조회되었으면 실행하지 않음
+
+      const db = getFirestore(app)
+      const docRef = doc(db, "board", fetchedDocumentId) // Document ID로 참조 생성
+      const result = await getDoc(docRef)
+
+      if (result.exists()) {
+        setDocumentData(result.data()) // Document 데이터를 상태로 저장
+        isFetched = true // 데이터가 조회되었음을 표시
+      } else {
+        console.log("No such document!")
+      }
+    }
+
+    fetchDocument()
+  }, [fetchedDocumentId]) // ID가 변경될 때마다 실행
+
+  const getYoutubeId = () => {
+    setYoutubeID(documentData?.youtubeLink?.split("v=")[1] ?? "")
+    console.log(youtubeID)
+  }
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     // access to player in all event handlers via event.target
     event.target.pauseVideo()
@@ -66,23 +100,23 @@ const PAGE_DETAIL_COMPO = () => {
       <div className={styles.detailPageFrame}>
         <div className={styles.detailLayout}>
           <header className={styles.detailHeader}>
-            <div className={styles.titleText}>{data?.fetchBoard?.title}</div>
+            <div className={styles.titleText}>{documentData?.title}</div>
             <div className={styles.profileContainer}>
               <div className={styles.profileRow}>
                 <Image
                   src={boardDetailImg.profileImage.src}
                   alt={boardDetailImg.profileImage.alt}
                 />
-                <div>{data?.fetchBoard?.writer}</div>
+                <div>{documentData.writer}</div>
               </div>
               <div className={styles.date}>
-                {data?.fetchBoard.createdAt?.split("T")[0]}
+                {documentData?.date?.split("T")[0]}
               </div>
             </div>
             <div className={styles.borderLine}></div>
             <div className={styles.metadataIcon}>
               <Image src={boardDetailImg.linkImage.src} alt="link-image" />
-              <Tooltip title={data?.fetchBoard.boardAddress?.address}>
+              <Tooltip title={documentData?.address?.basicAddress}>
                 <Image
                   src={boardDetailImg.locationImage.src}
                   alt="location-image"
@@ -98,7 +132,7 @@ const PAGE_DETAIL_COMPO = () => {
               className={styles.articleImage}
             />
             <article className={styles.articleContext}>
-              {data?.fetchBoard?.contents}
+              {documentData.contents}
             </article>
           </main>
           <div className={styles.videoContainer}>
@@ -124,7 +158,7 @@ const PAGE_DETAIL_COMPO = () => {
               />
               <div>목록이동</div>
             </button>
-            <button className={styles.detailButton} onClick={OnClickEditPage}>
+            <button className={styles.detailButton} onClick={onClickEditPage}>
               <Image src={boardDetailImg.editIcon.src} alt="edit-icon" />
               <div>수정하기</div>
             </button>
@@ -135,4 +169,4 @@ const PAGE_DETAIL_COMPO = () => {
   )
 }
 
-export default PAGE_DETAIL_COMPO
+export default OPEN_API_PAGE_DETAIL_COMPONENT
