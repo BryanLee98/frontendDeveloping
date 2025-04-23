@@ -2,7 +2,13 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   /* config options here */
-    async rewrites() {
+  env: {
+    GRAPHQL_ENDPOINT:
+      process.env.NODE_ENV === "production"
+        ? "https://main-practice.codebootcamp.co.kr/graphql"
+        : "http://localhost:3000/graphql",
+  },
+  async rewrites() {
     return [
       {
         source: "/graphql",
@@ -10,7 +16,6 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  trailingSlash: true,
 }
 
 export default nextConfig
