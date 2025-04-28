@@ -12,6 +12,7 @@ const PageList = () => {
     variables: { page: page },
   })
   console.log(data?.fetchBoards)
+  console.log("page", page)
   return (
     <>
       <PAGE_LIST_COMPO data={data} page={page} refetch={refetch} />

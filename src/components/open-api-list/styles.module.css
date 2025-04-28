@@ -4,12 +4,13 @@
   height: 100vh;
   align-items: center;
   padding: 50px 0px;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
 }
 
 .ListContainer {
   display: flex;
-  width: 650px;
+  width: 100%;
+  max-width: 1080px;
   justify-content: space-between;
   flex-direction: column;
   gap: 15px;
@@ -40,11 +41,11 @@
   gap: 10px;
   color: #1c1c1c;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .HeaderNumber {
-  width: 64px;
+  width: 60px;
 }
 
 .HeaderTitle {
@@ -54,7 +55,7 @@
 
 .HeaderWriter,
 .HeaderDate {
-  width: 100px;
+  width: 130px;
 }
 
 .ListItem {
@@ -68,7 +69,11 @@
   background-color: #f9f9f9;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
+.ListItem:hover {
+  background-color: #f0f0f0;
+}
 
+.ListItemNumber,
 .ContentNumber,
 .ContentWriter,
 .ContentDate {

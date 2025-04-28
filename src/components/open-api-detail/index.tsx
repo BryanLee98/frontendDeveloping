@@ -44,11 +44,12 @@ const boardDetailImg = {
 const OPEN_API_PAGE_DETAIL_COMPONENT = () => {
   const router = useRouter()
   let pathName = usePathname()
-  console.log(pathName)
+
   const fetchedDocumentId = pathName?.split("/")[2]
-  console.log(fetchedDocumentId)
+
   const [documentData, setDocumentData] = useState<DocumentData>({})
   const [youtubeID, setYoutubeID] = useState("")
+
   const onClickListPage = () => {
     router.push("/openapi")
   }

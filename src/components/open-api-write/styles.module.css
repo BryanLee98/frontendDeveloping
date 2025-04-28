@@ -98,6 +98,13 @@
   line-height: 1.6;
 }
 
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+}
+
 .darkSubmitButton {
   width: 100%;
   padding: 1.2rem;
@@ -121,6 +128,32 @@
 }
 
 .darkSubmitButton:active {
+  box-shadow:
+    inset 5px 5px 10px #202020,
+    inset -5px -5px 10px #545454;
+}
+
+.darkCancelButton {
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background: #e0e0e0;
+  color: #3a3a3a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow:
+    6px 6px 12px #202020,
+    -4px -4px 8px #545454;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.darkCancelButton:hover {
+  box-shadow:
+    4px 4px 8px #202020,
+    -2px -2px 4px #545454;
+}
+.darkCancelButton:active {
   box-shadow:
     inset 5px 5px 10px #202020,
     inset -5px -5px 10px #545454;

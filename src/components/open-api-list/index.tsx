@@ -22,7 +22,7 @@ const OPEN_API_PAGE_LIST_COMPONENT = (props: IOpenApiPageProps) => {
             <div className={styles.headerWriter}>작성자</div>
             <div className={styles.HeaderDate}>등록 날짜</div>
           </div>
-          {props?.dataList?.map((item, index) => (
+          {props?.currentData?.map((item, index) => (
             <button
               key={item?.id || index}
               onClick={(event) => onClickMove(event, item?.id)}

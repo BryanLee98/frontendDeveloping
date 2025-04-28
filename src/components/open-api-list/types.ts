@@ -4,4 +4,5 @@ export interface IOpenApiPageProps {
   data?: any
   dataList?: DocumentData[]
   setDataList?: React.Dispatch<React.SetStateAction<DocumentData[]>>
+  currentData?: DocumentData[]
 }
