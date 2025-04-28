@@ -1,14 +1,9 @@
 "use client"
-import React, { ChangeEvent, useEffect, useState } from "react"
+
 import styles from "./styles.module.css"
 import USE_API_BOARD_WRITE from "./hooks"
-import { usePathname } from "next/navigation"
-import { doc, DocumentData, getDoc, getFirestore } from "firebase/firestore"
-import { app } from "@/commons/libraries/firebase"
+import { I_API_BOARD_WRITE_COMPO } from "./types"
 
-interface I_API_BOARD_WRITE_COMPO {
-  isEdit: boolean
-}
 const API_BOARD_WRITE_COMPO = (props: I_API_BOARD_WRITE_COMPO) => {
   const { isEdit } = props
   const {

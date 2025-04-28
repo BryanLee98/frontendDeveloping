@@ -1,14 +1,10 @@
 "use client"
 import styles from "./styles.module.css"
-import { app } from "@/commons/libraries/firebase"
-import { doc, DocumentData, getDoc, getFirestore } from "firebase/firestore"
-import { usePathname } from "next/navigation"
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Tooltip } from "antd"
 import { DislikeOutlined, LikeOutlined } from "@ant-design/icons"
 import YouTube, { YouTubeProps } from "react-youtube"
+import USE_API_BOARD_WRITE from "./hooks"
 
 const boardDetailImg = {
   profileImage: {
@@ -42,48 +38,15 @@ const boardDetailImg = {
 }
 
 const OPEN_API_PAGE_DETAIL_COMPONENT = () => {
-  const router = useRouter()
-  let pathName = usePathname()
+  const {
+    documentData,
+    youtubeID,
+    onClickListPage,
+    onClickEditPage,
+    getYoutubeId,
+  } = USE_API_BOARD_WRITE()
 
-  const fetchedDocumentId = pathName?.split("/")[2]
-
-  const [documentData, setDocumentData] = useState<DocumentData>({})
-  const [youtubeID, setYoutubeID] = useState("")
-
-  const onClickListPage = () => {
-    router.push("/openapi")
-  }
-
-  const onClickEditPage = () => {
-    router.push(`/openapi/${fetchedDocumentId}/edit`)
-  }
-  useEffect(() => {
-    let isFetched = false // 데이터가 이미 조회되었는지 확인하는 플래그
-
-    const fetchDocument = async () => {
-      if (!fetchedDocumentId || isFetched) return // ID가 없거나 이미 조회되었으면 실행하지 않음
-
-      const db = getFirestore(app)
-      const docRef = doc(db, "board", fetchedDocumentId) // Document ID로 참조 생성
-      const result = await getDoc(docRef)
-
-      if (result.exists()) {
-        setDocumentData(result.data()) // Document 데이터를 상태로 저장
-        isFetched = true // 데이터가 조회되었음을 표시
-      } else {
-        console.log("No such document!")
-      }
-    }
-
-    fetchDocument()
-  }, [fetchedDocumentId]) // ID가 변경될 때마다 실행
-
-  const getYoutubeId = () => {
-    setYoutubeID(documentData?.youtubeLink?.split("v=")[1] ?? "")
-    console.log(youtubeID)
-  }
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo()
     getYoutubeId()
   }

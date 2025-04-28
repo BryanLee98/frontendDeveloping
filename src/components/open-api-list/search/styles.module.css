@@ -1,0 +1,36 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  align-items: center;
+  padding: 50px 0px;
+  /* background-color: #fafafa; */
+}
+
+.searchHeaderContainer {
+  display: flex;
+  width: 100%;
+  max-width: 1080px;
+  justify-content: end;
+  flex-direction: row;
+  gap: 15px;
+  padding: 24px 48px;
+}
+
+.enrollPost {
+  display: flex;
+  width: 134px;
+  height: 55px;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--blue, rgb(57, 127, 233));
+  text-align: center;
+  color: white;
+  box-shadow: 7px 7px 10px 1px #e7e7e7;
+  transition: 0.3s ease;
+}
+
+.enrollPost:hover {
+  background: var(--blue, rgb(137, 170, 220));
+}

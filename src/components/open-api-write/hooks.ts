@@ -145,8 +145,16 @@ const USE_API_BOARD_WRITE = (isEdit: boolean) => {
 
   const onClickEdit = async () => {
     if (isEdit === true) {
-      if (!title || !contents) {
-        alert("제목과 내용을 입력해주세요.")
+      // if (title.trim() === "" && contents.trim() === "") {
+      //   alert("제목과 내용을 수정해주세요.")
+      //   return
+      // }
+      if (title.trim() === "") {
+        alert("제목이 변경되지 않았습니다.")
+        return
+      }
+      if (contents.trim() === "") {
+        alert("내용이 변경되지 않았습니다.")
         return
       }
 
@@ -192,6 +200,14 @@ const USE_API_BOARD_WRITE = (isEdit: boolean) => {
         },
         youtubeLink: youtubeLink || existingData.youtubeLink,
       }
+
+      if (title.trim() && title !== existingData.title) {
+        updatedData.title = title
+      }
+      if (contents.trim() && contents !== existingData.contents) {
+        updatedData.contents = contents
+      }
+
       console.log("기존 데이터:", existingData)
       console.log("업데이트할 데이터:", updatedData)
       // Firestore에 업데이트
@@ -203,7 +219,7 @@ const USE_API_BOARD_WRITE = (isEdit: boolean) => {
 
   const onClickCancel = () => {
     if (confirm("작성중인 내용이 사라집니다. 정말로 나가시겠습니까?")) {
-      router.push(`/openapi/${targetId}`)
+      router.push(`/openapi`)
     }
   }
   return {
