@@ -13,6 +13,7 @@ import { Pagination } from "antd"
 import OPEN_API_PAGE_LIST_COMPONENT from "@/components/open-api-list"
 import { app } from "@/commons/libraries/firebase"
 import API_PAGINATION_COMPO from "@/components/open-api-list/pagination"
+import SEARCH_HEADER_COMPONENT from "@/components/open-api-list/search"
 
 const OPEN_API_PAGE = () => {
   const [dataList, setDataList] = useState<DocumentData>([])
@@ -52,6 +53,7 @@ const OPEN_API_PAGE = () => {
 
   return (
     <div>
+      <SEARCH_HEADER_COMPONENT />
       <OPEN_API_PAGE_LIST_COMPONENT currentData={currentData} />
       <API_PAGINATION_COMPO
         currentData={currentData}
