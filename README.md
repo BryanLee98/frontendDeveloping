@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Currently the vercel.app link is not working properly. I'm trying to fix the cors error.
 
 ## Recommend using following step to see the project.
 
