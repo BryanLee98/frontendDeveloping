@@ -11,6 +11,7 @@ const PAGE_LIST_COMPO = (props: IBoardListProps) => {
   const {
     isModalOpen,
     modalContent,
+    deleteId,
     handleOk,
     handleCancel,
     setDeleteId,
@@ -25,7 +26,7 @@ const PAGE_LIST_COMPO = (props: IBoardListProps) => {
             <div className={styles.headerNumber}>번호</div>
             <div className={styles.headerTitle}>제목</div>
             <div className={styles.headerWriter}>작성자</div>
-            <div className={styles.headerDate}>날짜</div>
+            <div className={styles.headerDate}>등록 날짜</div>
             <button className={styles.hidden}></button>
           </div>
           <div className={styles.contentBody}>
@@ -39,13 +40,35 @@ const PAGE_LIST_COMPO = (props: IBoardListProps) => {
                 onMouseLeave={() => setDeleteId("")}
               >
                 <div className={styles.contentNumber}>{index + 1}</div>
-                <div className={styles.contentTitle}>{el.title}</div>
+                <div className={styles.contentTitle}>
+                  <span style={{ margin: "10px" }}>
+                    {el.title
+                      .replaceAll(props.keyword, `@#$${props.keyword}@#$`)
+                      .split("@#$")
+                      .map((el, index) => (
+                        <span
+                          key={`${el}_${index}`}
+                          style={{
+                            backgroundColor:
+                              el === `${props.keyword}` ? "skyblue" : "",
+                          }}
+                        >
+                          {el}
+                        </span>
+                      ))}
+                  </span>
+                </div>
                 <div className={styles.contentWriter}>{el.writer}</div>
                 <div className={styles.contentDate}>
                   {el.createdAt.split("T")[0]}
                 </div>
                 <div>
-                  <span onClick={onClickDelete}>
+                  <span
+                    onClick={onClickDelete}
+                    className={
+                      deleteId === el._id ? styles.showButton : styles.hidden
+                    }
+                  >
                     <Image src={DeleteImage} alt="delete button" />
                   </span>
                 </div>

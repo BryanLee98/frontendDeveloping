@@ -34,7 +34,8 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
     onChangeDetailAddress,
     onChangeYoutubeLink,
     enrollButtonStyle,
-    onClickCancel,
+    onClickCancelNew,
+    onClickCancelEdit,
     handleComplete,
   } = USE_BOARD_WRITE(isEdit)
 
@@ -61,7 +62,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                 }
                 disabled={isEdit}
                 value={
-                  props.isEdit ? data?.fetchBoard.writer ?? "" : inputs.name
+                  props.isEdit ? (data?.fetchBoard.writer ?? "") : inputs.name
                 }
                 type="text"
                 placeholder="작성자 명을 입력하세요."
@@ -199,7 +200,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
         <div className={styles.enrollButtonContainer}>
           <button
             className={`${styles.cancelButton} ${styles.buttonTextStyle}`}
-            onClick={onClickCancel}
+            onClick={isEdit ? onClickCancelEdit : onClickCancelNew}
           >
             취소
           </button>

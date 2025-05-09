@@ -1,20 +1,29 @@
 "use client"
+
 import styles from "./styles.module.css"
 import _ from "lodash"
+import { ISearch } from "./type"
 import "@ant-design/v5-patch-for-react-19"
 import { Button, DatePicker } from "antd"
 import dayjs from "dayjs"
 import { useRouter } from "next/navigation"
-import { ISearch } from "./type"
+
+const Images = {
+  newPost: {
+    src: require("@/images/asset/newPost.png"),
+    alt: "이미지 추가",
+  },
+}
 
 const { RangePicker } = DatePicker
 const dateFormat = "YYYY/MM/DD"
 
-const SEARCH_HEADER_COMPONENT = (props: ISearch) => {
+const SEARCHBAR_COMPO = (props: ISearch) => {
   const router = useRouter()
   const onClickNewPost = () => {
-    router.push("/openapi/new")
+    router.push(`/boards/new`)
   }
+
   return (
     <>
       <div className={styles.Layout}>
@@ -63,4 +72,4 @@ const SEARCH_HEADER_COMPONENT = (props: ISearch) => {
   )
 }
 
-export default SEARCH_HEADER_COMPONENT
+export default SEARCHBAR_COMPO

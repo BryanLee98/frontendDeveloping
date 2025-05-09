@@ -10,12 +10,8 @@
   align-self: stretch;
 }
 
-.boardInnerBody {
-  width: 100%;
-}
-
 .boardFrame {
-  margin-top: 40px;
+  margin-top: 10px;
   display: flex;
   max-width: 1280px;
   flex-direction: column;
@@ -26,6 +22,9 @@
 
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
+}
+.boardInnerBody {
+  width: 100%;
 }
 
 .boardHeader {
@@ -38,29 +37,33 @@
 
 .headerNumber,
 .headerTitle,
-.headerWriter,
-.headerDate {
+.headerWriter {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   color: #1c1c1c;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 800;
+}
+.headerDate {
+  display: flex;
+  padding: 0px 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .headerNumber {
-  width: 64px;
+  width: 70px;
 }
 
 .headerTitle {
-  flex: 1 0 0;
+  flex: 1 1 auto;
   justify-content: left;
 }
 
 .headerWriter,
 .headerDate {
-  width: 100px;
+  width: 117px;
 }
 
 .contentContainer {

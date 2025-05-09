@@ -4,6 +4,7 @@ import { Exact, FetchBoardsQuery, InputMaybe } from "@/commons/graphql/graphql"
 import { ApolloQueryResult, OperationVariables } from "@apollo/client"
 
 export interface IBoardListProps {
+  keyword: string
   data: FetchBoardsQuery | undefined
   page: number
   refetch: (

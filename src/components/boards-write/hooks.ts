@@ -269,8 +269,12 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     backgroundColor: isActive === true ? "blue" : "lightGray",
   }
 
-  const onClickCancel = () => {
+  const onClickCancelEdit = () => {
     router.push(`/boards/${targetId}`)
+  }
+
+  const onClickCancelNew = () => {
+    router.push(`/boards/`)
   }
 
   return {
@@ -298,7 +302,8 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     onChangeDetailAddress,
     onChangeYoutubeLink,
     enrollButtonStyle,
-    onClickCancel,
+    onClickCancelNew,
+    onClickCancelEdit,
     handleComplete,
   }
 }

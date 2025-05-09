@@ -29,7 +29,24 @@ const OPEN_API_PAGE_LIST_COMPONENT = (props: IOpenApiPageProps) => {
             >
               <div className={styles.ListItem}>
                 <div className={styles.ContentNumber}>{index + 1}</div>
-                <div className={styles.ContentTitle}>{item?.title}</div>
+                <div className={styles.ContentTitle}>
+                  <span style={{ margin: "10px" }}>
+                    {item.title
+                      .replaceAll(props.keyword, `@#$${props.keyword}@#$`)
+                      .split("@#$")
+                      .map((item: string, index: number) => (
+                        <span
+                          key={`${item}_${index}`}
+                          style={{
+                            backgroundColor:
+                              item === `${props.keyword}` ? "skyblue" : "",
+                          }}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                  </span>
+                </div>
                 <div className={styles.ContentWriter}>{item?.writer}</div>
                 <div className={styles.ContentDate}>
                   {(item?.date || "").split("T")[0]}
