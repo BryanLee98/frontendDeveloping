@@ -9,14 +9,22 @@ import {
   orderBy,
   DocumentData,
 } from "firebase/firestore"
-import { Pagination } from "antd"
+import _ from "lodash"
 import OPEN_API_PAGE_LIST_COMPONENT from "@/components/open-api-list"
 import { app } from "@/commons/libraries/firebase"
 import API_PAGINATION_COMPO from "@/components/open-api-list/pagination"
 import SEARCH_HEADER_COMPONENT from "@/components/open-api-list/search"
+import { Input } from "antd"
+import type { GetProps } from "antd"
+
+type SearchProps = GetProps<typeof Input.Search>
+const { Search } = Input
 
 const OPEN_API_PAGE = () => {
   const [dataList, setDataList] = useState<DocumentData>([])
+  const [keyword, setKeyword] = useState<string>("")
+  const [prevDate, setPrevDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalCount, setTotalCount] = useState(0)
   const itemsPerPage = 10
@@ -42,6 +50,21 @@ const OPEN_API_PAGE = () => {
     fetchData()
   }, [])
 
+  const getDebounce = _.debounce((eventValue) => {
+    // refetch({
+    //   search: eventValue,
+    //   page: 1,
+    //   startDate: prevDate,
+    //   endDate: endDate,
+    // })
+    setKeyword(eventValue)
+  }, 400)
+
+  const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
+    getDebounce(value)
+    console.log(info?.source, value)
+  }
+
   // 현재 페이지에 해당하는 데이터 계산
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
@@ -53,8 +76,18 @@ const OPEN_API_PAGE = () => {
 
   return (
     <div>
-      <SEARCH_HEADER_COMPONENT />
-      <OPEN_API_PAGE_LIST_COMPONENT currentData={currentData} />
+      <SEARCH_HEADER_COMPONENT
+        keyword={keyword}
+        Search={Search}
+        onSearch={onSearch}
+        setKeyword={setKeyword}
+        setPrevDate={setPrevDate}
+        setEndDate={setEndDate}
+      />
+      <OPEN_API_PAGE_LIST_COMPONENT
+        keyword={keyword}
+        currentData={currentData}
+      />
       <API_PAGINATION_COMPO
         currentData={currentData}
         currentPage={currentPage}
