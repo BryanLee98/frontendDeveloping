@@ -51,12 +51,6 @@ const OPEN_API_PAGE = () => {
   }, [])
 
   const getDebounce = _.debounce((eventValue) => {
-    // refetch({
-    //   search: eventValue,
-    //   page: 1,
-    //   startDate: prevDate,
-    //   endDate: endDate,
-    // })
     setKeyword(eventValue)
   }, 400)
 
