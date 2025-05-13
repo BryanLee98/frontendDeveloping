@@ -38,14 +38,7 @@ const boardDetailImg = {
 }
 
 const PAGE_DETAIL_COMPO = () => {
-  const {
-    data,
-    youtubeID,
-    setYoutubeID,
-    getYoutubeId,
-    OnClickEditPage,
-    onClickListPage,
-  } = USE_PAGE_DETAIL()
+  const { data, youtubeID, setYoutubeID, getYoutubeId, OnClickEditPage, onClickListPage } = USE_PAGE_DETAIL()
 
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     // access to player in all event handlers via event.target
@@ -69,37 +62,34 @@ const PAGE_DETAIL_COMPO = () => {
             <div className={styles.titleText}>{data?.fetchBoard?.title}</div>
             <div className={styles.profileContainer}>
               <div className={styles.profileRow}>
-                <Image
-                  src={boardDetailImg.profileImage.src}
-                  alt={boardDetailImg.profileImage.alt}
-                />
+                <Image src={boardDetailImg.profileImage.src} alt={boardDetailImg.profileImage.alt} />
                 <div>{data?.fetchBoard?.writer}</div>
               </div>
-              <div className={styles.date}>
-                {data?.fetchBoard.createdAt?.split("T")[0]}
-              </div>
+              <div className={styles.date}>{data?.fetchBoard.createdAt?.split("T")[0]}</div>
             </div>
             <div className={styles.borderLine}></div>
             <div className={styles.metadataIcon}>
               <Image src={boardDetailImg.linkImage.src} alt="link-image" />
               <Tooltip title={data?.fetchBoard.boardAddress?.address}>
-                <Image
-                  src={boardDetailImg.locationImage.src}
-                  alt="location-image"
-                />
+                <Image src={boardDetailImg.locationImage.src} alt="location-image" />
               </Tooltip>
             </div>
           </header>
 
           <main className={styles.articleFrame}>
-            <Image
-              src={boardDetailImg.articleImage.src}
-              alt="article-image"
-              className={styles.articleImage}
-            />
-            <article className={styles.articleContext}>
-              {data?.fetchBoard?.contents}
-            </article>
+            {data?.fetchBoard.images?.map((image) =>
+              image !== "" ? (
+                <img
+                  key={image}
+                  src={`https://storage.googleapis.com/${image}`}
+                  alt="article-image"
+                  className={styles.articleImage}
+                />
+              ) : (
+                ""
+              )
+            )}
+            <article className={styles.articleContext}>{data?.fetchBoard?.contents}</article>
           </main>
           <div className={styles.videoContainer}>
             <YouTube videoId={youtubeID} opts={opts} onReady={onPlayerReady} />
@@ -118,10 +108,7 @@ const PAGE_DETAIL_COMPO = () => {
 
           <footer className={styles.detailButtonContainer}>
             <button className={styles.detailButton} onClick={onClickListPage}>
-              <Image
-                src={boardDetailImg.pageListIcon.src}
-                alt="page-list-icon"
-              />
+              <Image src={boardDetailImg.pageListIcon.src} alt="page-list-icon" />
               <div>목록이동</div>
             </button>
             <button className={styles.detailButton} onClick={OnClickEditPage}>

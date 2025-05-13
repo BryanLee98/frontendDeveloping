@@ -1,12 +1,13 @@
 "use client"
 import "@ant-design/v5-patch-for-react-19"
 import styles from "./styles.module.css"
-import addImage from "../../images/asset/add_image.png"
-import Image from "next/image"
+import defaultImage from "../../images/asset/add_image.png"
+// import Image from "next/image"
 import { IPageWriteProps } from "./types"
-import { Modal } from "antd"
 import DaumPostcodeEmbed from "react-daum-postcode"
 import { USE_BOARD_WRITE } from "./hooks"
+import { Modal } from "antd"
+import Image from "next/image"
 
 const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
   const { isEdit } = props
@@ -16,6 +17,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
     detailAddress,
     data,
     inputs,
+    images,
     password,
     nameError,
     passwordError,
@@ -37,6 +39,9 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
     onClickCancelNew,
     onClickCancelEdit,
     handleComplete,
+    fileRef,
+    handleFileChange,
+    handleDeleteImage,
   } = USE_BOARD_WRITE(isEdit)
 
   return (
@@ -44,9 +49,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
       <div className={styles.Layout}>
         <div className={styles.boxContainer}>
           {/* 제목 */}
-          <div className={styles.titleTextStyle}>
-            {props.isEdit ? "게시글 수정" : "게시글 등록"}
-          </div>
+          <div className={styles.titleTextStyle}>{props.isEdit ? "게시글 수정" : "게시글 등록"}</div>
 
           {/* 작성자 및 비밀번호 입력 */}
           <div className={styles.enrollText}>
@@ -57,13 +60,9 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
               </div>
               <input
                 id="name"
-                className={
-                  props.isEdit ? styles.disabled_input : styles.enrollInput
-                }
+                className={props.isEdit ? styles.disabled_input : styles.enrollInput}
                 disabled={isEdit}
-                value={
-                  props.isEdit ? (data?.fetchBoard.writer ?? "") : inputs.name
-                }
+                value={props.isEdit ? (data?.fetchBoard.writer ?? "") : inputs.name}
                 type="text"
                 placeholder="작성자 명을 입력하세요."
                 onChange={onChangeInputs}
@@ -76,9 +75,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                 <span className={styles.essentialFill}>*</span>
               </div>
               <input
-                className={
-                  props.isEdit ? styles.disabled_input : styles.enrollInput
-                }
+                className={props.isEdit ? styles.disabled_input : styles.enrollInput}
                 disabled={isEdit}
                 defaultValue={props.isEdit ? "*********" : password}
                 type="password"
@@ -117,9 +114,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
             <input
               id="content"
               className={`${styles.enrollInput} ${styles.enrollTextArea}`}
-              defaultValue={
-                props.isEdit ? data?.fetchBoard?.contents : inputs.content
-              }
+              defaultValue={props.isEdit ? data?.fetchBoard?.contents : inputs.content}
               type="text"
               placeholder="내용을 입력하세요."
               onChange={onChangeInputs}
@@ -140,10 +135,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                 placeholder="012345"
               />
 
-              <button
-                className={`${styles.addressButton} ${styles.buttonTextStyle}`}
-                onClick={onToggleAddressModal}
-              >
+              <button className={`${styles.addressButton} ${styles.buttonTextStyle}`} onClick={onToggleAddressModal}>
                 우편번호 검색
               </button>
             </div>
@@ -165,12 +157,7 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
           </div>
 
           {isAddressModalOpen && (
-            <Modal
-              open={isAddressModalOpen}
-              onCancel={onToggleAddressModal}
-              onOk={onToggleAddressModal}
-              footer={<></>}
-            >
+            <Modal open={isAddressModalOpen} onCancel={onToggleAddressModal} onOk={onToggleAddressModal} footer={<></>}>
               <DaumPostcodeEmbed onComplete={handleComplete} />
             </Modal>
           )}
@@ -191,9 +178,43 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
           <div className={styles.imgBox}>
             <div className={styles.textStyle}>사진 첨부</div>
             <div className={styles.imgUpload}>
-              <Image src={addImage} alt="이미지추가" />
-              <Image src={addImage} alt="이미지추가" />
-              <Image src={addImage} alt="이미지추가" />
+              {images.map((image, index) => (
+                <div key={index} style={{ position: "relative", display: "inline-block" }}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    id={`file-input-${index}`}
+                    onChange={(event) => handleFileChange(event, index)}
+                  />
+                  <label htmlFor={`file-input-${index}`} style={{ cursor: "pointer" }}>
+                    <Image
+                      src={image || defaultImage}
+                      alt={`Preview ${index + 1}`}
+                      width={150}
+                      height={150}
+                      objectFit="cover"
+                    />
+                  </label>
+                  {image && (
+                    <button
+                      onClick={() => handleDeleteImage(index)}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        backgroundColor: "gray",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "10%",
+                        cursor: "pointer",
+                      }}
+                    >
+                      x
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>

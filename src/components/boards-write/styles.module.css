@@ -154,6 +154,13 @@
   display: flex;
   flex-direction: row;
   gap: 15px;
+  position: relative;
+}
+
+.imagePrevCancelButton {
+  position: absolute;
+  width: 10px;
+  height: -2px;
 }
 
 .enrollButtonContainer {

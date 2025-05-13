@@ -80,8 +80,8 @@
   width: 1280px;
 }
 .articleImage {
-  width: 400px;
-  height: 531px;
+  width: auto;
+  height: auto;
 }
 
 .articleContext {

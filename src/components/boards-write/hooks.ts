@@ -1,21 +1,25 @@
 "use client"
 import { useMutation, useQuery } from "@apollo/client"
-import { ChangeEvent, MouseEvent, useState, useEffect } from "react"
+import { ChangeEvent, MouseEvent, useState, useEffect, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
 import {
   CreateBoardDocument,
   FetchBoardDocument,
   UpdateBoardDocument,
+  UploadFileDocument,
 } from "@/commons/graphql/graphql"
 import { Address } from "react-daum-postcode"
+import { IMAGE_FILE_VALIDATION } from "./ImageFileValidation"
 
 export const USE_BOARD_WRITE = (isEdit: boolean) => {
   const router = useRouter()
   const params = useParams()
+  const fileRef = useRef<HTMLInputElement>(null)
   const editId = isEdit ? params?.boardID : null
 
   const [createBoard] = useMutation(CreateBoardDocument)
   const [updateBoard] = useMutation(UpdateBoardDocument)
+  const [uploadFile] = useMutation(UploadFileDocument)
 
   const { data } = useQuery(FetchBoardDocument, {
     variables: { boardId: String(editId) },
@@ -30,6 +34,9 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     title: "",
     content: "",
   })
+  const [images, setImages] = useState(["", "", ""])
+  const [imageUrl, setImageUrl] = useState(["", "", ""])
+
   const [password, setPassword] = useState("")
   const [youtubeLink, setYoutubeLink] = useState("")
 
@@ -97,16 +104,61 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     setIsModalOpen(false)
   }
 
-  const onToggleAddressModal = () =>
-    setIsAddressModalOpen((prev: boolean) => !prev)
+  const onToggleAddressModal = () => setIsAddressModalOpen((prev: boolean) => !prev)
+
+  //이미지 파일을 업로드, 전송 요청
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>, index: number) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      const updatedImages = [...images]
+      updatedImages[index] = reader.result as string
+      setImages(updatedImages)
+    }
+    reader.readAsDataURL(file)
+
+    // index 값 검증
+    if (index < 0 || index >= images.length) {
+      console.error("유효하지 않은 index 값입니다:", index)
+      return
+    }
+    try {
+      const result = await uploadFile({ variables: { file } })
+      const uploadedUrl = result.data?.uploadFile.url ?? ""
+      console.log("URL업로드::", uploadedUrl)
+
+      const updatedImageUrl = [...imageUrl]
+      updatedImageUrl[index] = uploadedUrl
+      setImageUrl(updatedImageUrl)
+
+      console.log(updatedImageUrl)
+    } catch (error) {
+      console.error("파일 업로드 중 오류 발생:", error)
+    }
+  }
+
+  const handleDeleteImage = (index: number) => {
+    const updatedImages = [...images]
+    updatedImages[index] = ""
+    console.log("삭제된 이미지::", updatedImages)
+    setImages(updatedImages)
+    console.log("이미지 삭제됨::", images)
+
+    const updatedImageUrl = [...imageUrl]
+    updatedImageUrl[index] = ""
+    console.log("삭제된 이미지 URL::", updatedImageUrl)
+    setImageUrl(updatedImageUrl)
+    console.log("삭제된 이미지 URL::", imageUrl)
+  }
 
   //버튼을 클릭하면 검증을 해라
   const onClickEnroll = async (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation()
-    //새로운 게시글 등록의 경우
+    // 새로운 게시글 등록의 경우
     if (isEdit === false) {
       let haveError = false
-
       console.log(data)
       if (inputs.name.trim() === "") {
         setNameError("필수 입력 사항입니다.")
@@ -114,7 +166,6 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
       } else {
         setNameError("")
       }
-
       if (password.length === 0) {
         setPasswordError("필수 입력 사항입니다.")
         haveError = true
@@ -133,7 +184,6 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
       } else {
         setContextError("")
       }
-
       if (haveError === false) {
         const { data } = await createBoard({
           variables: {
@@ -148,10 +198,11 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
                 address: address,
                 addressDetail: detailAddress,
               },
-              images: ["", ""],
+              images: imageUrl,
             },
           },
         })
+        console.log(data?.createBoard)
         if (data?.createBoard) {
           setTargetId(data?.createBoard._id)
           setModalContent("게시글을 등록하시겠습니까?.")
@@ -169,11 +220,8 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
       }
       if (inputs.content?.trim() === "") setContextError("필수입력 사항입니다.")
       if (inputs.title?.trim() === "") setTitleError("필수입력 사항입니다.")
-
       //초기에 입력한 비밀번호와 일치하는지 확인
-      const passwordInput = prompt(
-        "글을 작성할 때 사용했던 비밀번호를 입력해주세요."
-      )
+      const passwordInput = prompt("글을 작성할 때 사용했던 비밀번호를 입력해주세요.")
       //수정
       const updateInput: any = {
         boardAddress: {
@@ -184,38 +232,22 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
       if (inputs.title?.trim() && inputs.title !== data?.fetchBoard?.title) {
         updateInput.title = inputs.title
       }
-      if (
-        inputs.content?.trim() &&
-        inputs.content !== data?.fetchBoard?.contents
-      ) {
+      if (inputs.content?.trim() && inputs.content !== data?.fetchBoard?.contents) {
         updateInput.contents = inputs.content
       }
-
       if (youtubeLink?.trim() && youtubeLink !== data?.fetchBoard?.youtubeUrl) {
         updateInput.youtubeUrl = youtubeLink
       }
-
       //주소를 처리,
-      if (
-        address?.trim() &&
-        address !== data?.fetchBoard?.boardAddress?.address
-      ) {
+      if (address?.trim() && address !== data?.fetchBoard?.boardAddress?.address) {
         updateInput.boardAddress.address = address
       }
-      if (
-        zipcode?.trim() &&
-        zipcode !== data?.fetchBoard?.boardAddress?.zipcode
-      ) {
+      if (zipcode?.trim() && zipcode !== data?.fetchBoard?.boardAddress?.zipcode) {
         updateInput.boardAddress.zipcode = zipcode
       }
-
-      if (
-        detailAddress?.trim() &&
-        detailAddress !== data?.fetchBoard?.boardAddress?.addressDetail
-      ) {
+      if (detailAddress?.trim() && detailAddress !== data?.fetchBoard?.boardAddress?.addressDetail) {
         updateInput.boardAddress.addressDetail = detailAddress
       }
-
       //수정된 값들의 길이가 0보다 크다면 수정요청을 보내라.
       if (Object.keys(updateInput).length > 0) {
         console.log("수정된 항목만 서버에 보내지고 있는가? ::", updateInput)
@@ -238,9 +270,7 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
         } catch (error: any) {
           // 에러 발생 시 처리
           if (error.graphQLErrors) {
-            const errorMessages = error.graphQLErrors.map(
-              (err: any) => err.message
-            )
+            const errorMessages = error.graphQLErrors.map((err: any) => err.message)
             setModalContent(errorMessages.join(", "))
             setIsModalOpen(true)
           } else {
@@ -282,6 +312,7 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     detailAddress,
     data,
     inputs,
+    images,
     password,
     nameError,
     passwordError,
@@ -305,5 +336,8 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     onClickCancelNew,
     onClickCancelEdit,
     handleComplete,
+    handleFileChange,
+    handleDeleteImage,
+    fileRef,
   }
 }
