@@ -34,11 +34,16 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     title: "",
     content: "",
   })
-  const [images, setImages] = useState(["", "", ""])
-  const [imageUrl, setImageUrl] = useState(["", "", ""])
-
   const [password, setPassword] = useState("")
   const [youtubeLink, setYoutubeLink] = useState("")
+
+  //수정모드에서 해당 게시글의 이미지
+  const editImages = data?.fetchBoard.images
+  // console.log("editImages::", editImages)
+  // 이미지 미리보기 데이터를 담은 배열
+  const [images, setImages] = useState(["", "", ""])
+  //이미지 업로드를 위한 url주소 배열
+  const [imageUrl, setImageUrl] = useState(["", "", ""])
 
   //주소
   const [address, setAddress] = useState<string>("")
@@ -52,6 +57,7 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
         title: data.fetchBoard.title || "",
         content: data.fetchBoard.contents || "",
       })
+      setImages(editImages || [])
       setYoutubeLink(data.fetchBoard.youtubeUrl || "")
       setAddress(data.fetchBoard.boardAddress?.address || "")
       setDetailAddress(data.fetchBoard.boardAddress?.addressDetail || "")
@@ -83,74 +89,106 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
       [event.target.id]: event.target.value,
     })
   }
-
   const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
   }
-
   const onChangeDetailAddress = (event: ChangeEvent<HTMLInputElement>) => {
     setDetailAddress(event.target.value)
   }
-
   const onChangeYoutubeLink = (event: ChangeEvent<HTMLInputElement>) => {
     setYoutubeLink(event.target.value)
   }
 
+  //모달의 상태창
   const handleOk = () => {
     router.push(`/boards/${targetId}`)
   }
-
   const handleCancel = () => {
     setIsModalOpen(false)
   }
-
   const onToggleAddressModal = () => setIsAddressModalOpen((prev: boolean) => !prev)
 
-  //이미지 파일을 업로드, 전송 요청
+  //이미지의 업로드와 미리보기를 위한 함수
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>, index: number) => {
     const file = event.target.files?.[0]
+    // const file = fileRef.current?.files?.[0]
     if (!file) return
 
     const reader = new FileReader()
     reader.onload = () => {
-      const updatedImages = [...images]
+      // if (!isEdit) {
+      //   console.log("새로운 게시글 등록 모드")
+      console.log("images", images)
+      const updatedImages = [...(images ? images : ["", "", ""])]
+      console.log("updatedImages::", updatedImages)
       updatedImages[index] = reader.result as string
       setImages(updatedImages)
+      // } else if (isEdit) {
+      //   const updatedEditImages = [...(images ? images : ["", "", ""])]
+      //   updatedEditImages[index] = reader.result as string // 미리보기 업데이트
+      //   console.log("미리보기 updatedEditImages::", updatedEditImages)
+      //   setImages(updatedEditImages)
+      //   console.log("수정된 이미지들이 업데이트 되었는가::", images)
+      // }
     }
     reader.readAsDataURL(file)
 
-    // index 값 검증
+    //파일 검증
+    const isValid = IMAGE_FILE_VALIDATION(file)
+    if (!isValid) {
+      alert("파일의 형식이 유효하지 않습니다.")
+      return
+    }
+    //index값이 유효한지 검증
+    if (!images) return
     if (index < 0 || index >= images.length) {
       console.error("유효하지 않은 index 값입니다:", index)
       return
     }
+
     try {
       const result = await uploadFile({ variables: { file } })
       const uploadedUrl = result.data?.uploadFile.url ?? ""
       console.log("URL업로드::", uploadedUrl)
 
-      const updatedImageUrl = [...imageUrl]
-      updatedImageUrl[index] = uploadedUrl
-      setImageUrl(updatedImageUrl)
-
-      console.log(updatedImageUrl)
+      if (isEdit) {
+        //수정상태일 때, 이미지를 조회해서 가져온다.
+        const updatedEditImages = [...(editImages || ["", "", ""])]
+        updatedEditImages[index] = uploadedUrl
+        console.log("업로드 주소 updatedEditImages::", updatedEditImages)
+        setImageUrl(updatedEditImages)
+      } else {
+        const updatedImageUrl = [...(imageUrl || ["", "", ""])]
+        updatedImageUrl[index] = uploadedUrl
+        setImageUrl(updatedImageUrl)
+      }
     } catch (error) {
       console.error("파일 업로드 중 오류 발생:", error)
     }
   }
 
   const handleDeleteImage = (index: number) => {
-    const updatedImages = [...images]
-    updatedImages[index] = ""
-    console.log("삭제된 이미지::", updatedImages)
-    setImages(updatedImages)
-    console.log("이미지 삭제됨::", images)
+    if (!isEdit) {
+      //미리보기 이미지를 삭제하면 미리보기 이미지가 사라짐
+      const updatedImages = [...(images ? images : ["", "", ""])]
+      updatedImages[index] = ""
+      setImages(updatedImages)
 
-    const updatedImageUrl = [...imageUrl]
-    updatedImageUrl[index] = ""
-    console.log("삭제된 이미지 URL::", updatedImageUrl)
-    setImageUrl(updatedImageUrl)
-    console.log("삭제된 이미지 URL::", imageUrl)
+      //이미지 URL을 삭제하면 이미지 URL이 사라짐
+      const updatedImageUrl = [...(imageUrl || ["", "", ""])]
+      updatedImageUrl[index] = ""
+      setImageUrl(updatedImageUrl)
+    } else if (isEdit === true) {
+      console.log("현재 수정모드입니다.")
+      const updateEditImages = [...(editImages ? images : ["", "", ""])]
+      updateEditImages[index] = ""
+      console.log("삭제된 이미지::", updateEditImages)
+      setImageUrl(updateEditImages)
+      setImages(updateEditImages) // 미리보기 이미지도 사라지도록 추가
+    }
+  }
+  const onClickImage = () => {
+    fileRef.current?.click()
   }
 
   //버튼을 클릭하면 검증을 해라
@@ -228,7 +266,13 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
           zipcode: "",
           addressDetail: "",
         },
+        images: imageUrl,
       }
+
+      //TODO: 수정을 할 때 변경되는 이미지만 수정되어 업데이트 되도록 만들기
+      // 현재는 수정버튼을 누르면 이미지가 불러와지긴 하지만, 새로운 이미지가 추가되어 수정되면 기존에 있던 이미지는 날라가버림
+      // 기존 이미지는 남겨두기
+
       if (inputs.title?.trim() && inputs.title !== data?.fetchBoard?.title) {
         updateInput.title = inputs.title
       }
@@ -248,8 +292,18 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
       if (detailAddress?.trim() && detailAddress !== data?.fetchBoard?.boardAddress?.addressDetail) {
         updateInput.boardAddress.addressDetail = detailAddress
       }
-      //수정된 값들의 길이가 0보다 크다면 수정요청을 보내라.
+      //이미지에 변경이 있는지 확인
+      // const submitImage = []
+      // for (let i = 0; i < 3; i++) {
+      //   if (editImages && imageUrl[i] !== editImages[i]) {
+      //     submitImage.push(imageUrl[i])
+      //   }
+      // }
+      // if (submitImage.length > 0) updateInput.images = submitImage
+
+      // 수정된 값들의 길이가 0보다 크다면 수정요청을 보내라.
       if (Object.keys(updateInput).length > 0) {
+        console.log("수정모드에서 업로드 주소 imageUrl::", imageUrl)
         console.log("수정된 항목만 서버에 보내지고 있는가? ::", updateInput)
         try {
           const result = await updateBoard({
@@ -313,6 +367,7 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     data,
     inputs,
     images,
+    editImages,
     password,
     nameError,
     passwordError,
@@ -335,6 +390,7 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     enrollButtonStyle,
     onClickCancelNew,
     onClickCancelEdit,
+    onClickImage,
     handleComplete,
     handleFileChange,
     handleDeleteImage,

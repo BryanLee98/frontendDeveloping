@@ -7,28 +7,26 @@ import DaumPostcodeEmbed from "react-daum-postcode"
 import { USE_BOARD_WRITE } from "./hooks"
 import { Modal } from "antd"
 import Image from "next/image"
-import { useState } from "react"
 
 const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
   const { isEdit } = props
   const {
     address,
-    contextError,
-    data,
+    youtubeLink,
     detailAddress,
-    editImages,
-    fileRef,
+    data,
     inputs,
     images,
-    isAddressModalOpen,
-    isButtonDisabled,
-    isModalOpen,
-    nameError,
-    modalContent,
+    editImages,
     password,
+    nameError,
     passwordError,
     titleError,
-    youtubeLink,
+    contextError,
+    isButtonDisabled,
+    isModalOpen,
+    modalContent,
+    isAddressModalOpen,
     zipcode,
     handleOk,
     onToggleAddressModal,
@@ -40,22 +38,11 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
     enrollButtonStyle,
     onClickCancelNew,
     onClickCancelEdit,
-    onClickImage,
     handleComplete,
+    fileRef,
     handleFileChange,
     handleDeleteImage,
   } = USE_BOARD_WRITE(isEdit)
-
-  const [imagePrev, setImagePrev] = useState("")
-  const ImagePreview = () => {
-    const file = fileRef.current?.files?.[0]
-    const reader = new FileReader()
-    if (file === undefined) return
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      setImagePrev(reader.result as string)
-    }
-  }
 
   return (
     <>
@@ -193,7 +180,6 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
             <div className={styles.imgUpload}>
               {images?.map((image, index) => (
                 <div key={index} className={styles.imageUploadButton}>
-                  {/* 파일 입력 필드를 숨기고 스타일을 커스터마이징 */}
                   <input
                     type="file"
                     accept="image/*"
@@ -201,42 +187,48 @@ const PAGE_WRITE_COMPO = (props: IPageWriteProps) => {
                     id={`file-input-${index}`}
                     onChange={(event) => handleFileChange(event, index)}
                   />
-                  <div>
-                    {/* 파일 입력 필드와 연결된 레이블로 클릭 시 파일 선택 창이 열림 */}
-                    <label htmlFor={`file-input-${index}`} style={{ cursor: "pointer" }}>
-                      {/* 이미지 미리보기: 이미지가 있으면 해당 URL을, 없으면 기본 이미지를 표시 */}
-                      {!props.isEdit ? (
+                  {props.isEdit ? (
+                    <div>
+                      <label htmlFor={`file-input-${index}`} style={{ cursor: "pointer" }}>
                         <Image
                           unoptimized={true}
+                          src={`https://storage.googleapis.com/${editImages?.[index]}` || defaultImage} // 수정된 부분
+                          alt={`Preview ${index + 1}`}
+                          className={styles.imagePreview}
+                          width={150}
+                          height={150}
+                        />
+                      </label>
+                      <button
+                        onClick={() => handleDeleteImage(index)}
+                        className={
+                          `https://storage.googleapis.com/${editImages?.[index]}`
+                            ? styles.ShowImagePrevCancelButton
+                            : styles.imagePrevCancelButton
+                        }
+                      >
+                        x
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <label htmlFor={`file-input-${index}`} style={{ cursor: "pointer" }}>
+                        <Image
                           src={image || defaultImage}
                           alt={`Preview ${index + 1}`}
                           className={styles.imagePreview}
                           width={150}
                           height={150}
                         />
-                      ) : (
-                        <Image
-                          unoptimized={true}
-                          src={
-                            image === ""
-                              ? defaultImage
-                              : `https://storage.googleapis.com/${editImages?.[index]}` || image
-                          }
-                          alt={`Preview ${index + 1}`}
-                          className={styles.imagePreview}
-                          width={150}
-                          height={150}
-                        />
-                      )}
-                    </label>
-                    {/* 이미지 삭제 버튼: 클릭 시 해당 이미지를 삭제 */}
-                    <button
-                      onClick={() => handleDeleteImage(index)}
-                      className={image ? styles.ShowImagePrevCancelButton : styles.imagePrevCancelButton}
-                    >
-                      x
-                    </button>
-                  </div>
+                      </label>
+                      <button
+                        onClick={() => handleDeleteImage(index)}
+                        className={image ? styles.ShowImagePrevCancelButton : styles.imagePrevCancelButton}
+                      >
+                        x
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

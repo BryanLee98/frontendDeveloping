@@ -156,11 +156,30 @@
   gap: 15px;
   position: relative;
 }
+.imagePreview {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
 
+.imageUploadButton {
+  position: relative;
+  display: inline-block;
+}
 .imagePrevCancelButton {
+  visibility: hidden;
+}
+
+.ShowImagePrevCancelButton {
   position: absolute;
-  width: 10px;
-  height: -2px;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  visibility: visible;
 }
 
 .enrollButtonContainer {
