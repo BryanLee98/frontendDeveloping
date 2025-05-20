@@ -8,16 +8,8 @@ import { Modal } from "antd"
 import { IBoardListProps } from "./types"
 
 const PAGE_LIST_COMPO = (props: IBoardListProps) => {
-  const {
-    isModalOpen,
-    modalContent,
-    deleteId,
-    handleOk,
-    handleCancel,
-    setDeleteId,
-    onClickDelete,
-    onClickMove,
-  } = USE_PAGE_LIST(props)
+  const { isModalOpen, modalContent, deleteId, handleOk, handleCancel, setDeleteId, onClickDelete, onClickMove } =
+    USE_PAGE_LIST(props)
   return (
     <div className={styles.boardBody}>
       <div className={styles.boardFrame}>
@@ -49,8 +41,7 @@ const PAGE_LIST_COMPO = (props: IBoardListProps) => {
                         <span
                           key={`${el}_${index}`}
                           style={{
-                            backgroundColor:
-                              el === `${props.keyword}` ? "skyblue" : "",
+                            backgroundColor: el === `${props.keyword}` ? "skyblue" : "",
                           }}
                         >
                           {el}
@@ -59,16 +50,9 @@ const PAGE_LIST_COMPO = (props: IBoardListProps) => {
                   </span>
                 </div>
                 <div className={styles.contentWriter}>{el.writer}</div>
-                <div className={styles.contentDate}>
-                  {el.createdAt.split("T")[0]}
-                </div>
+                <div className={styles.contentDate}>{el.createdAt.split("T")[0]}</div>
                 <div>
-                  <span
-                    onClick={onClickDelete}
-                    className={
-                      deleteId === el._id ? styles.showButton : styles.hidden
-                    }
-                  >
+                  <span onClick={onClickDelete} className={deleteId === el._id ? styles.showButton : styles.hidden}>
                     <Image src={DeleteImage} alt="delete button" />
                   </span>
                 </div>

@@ -1,0 +1,84 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.sectionTitle {
+  font-family: "Pretendard Variable";
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.userInfoList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  gap: 15px;
+}
+
+.userInfoItem {
+  font-family: "Pretendard Variable";
+  font-size: 16px;
+  font-weight: 400;
+  /* margin-bottom: 10px; */
+}
+
+.userItemContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.userProfileContainer {
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.actionLink {
+  color: #007bff;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.border {
+  width: 100%;
+  height: 1px;
+  background: var(--gray-100, #e4e4e4);
+  margin-top: 10px;
+}
+
+.pointContainer {
+  margin: 5px;
+  display: flex;
+  gap: 10px;
+}
+
+.itemList {
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* width: 100%; */
+}
+.itemList:hover {
+  border-radius: 3px;
+  background-color: rgba(147, 147, 147, 0.3);
+}
