@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import styles from "./styles.module.css"
+import USE_NAVIGATION_HOOK from "./hooks"
 
 const HeaderImageSrc = {
   tripIcon: {
@@ -18,31 +19,23 @@ const HeaderImageSrc = {
   },
 }
 const LAYOUT_NAVIGATION = () => {
+  const { onClickMyPage, onClickTripTalk } = USE_NAVIGATION_HOOK()
   return (
     <>
       <div className={styles.Layout}>
         <div className={styles.HeaderWrapper}>
           <div className={styles.TapWrapper}>
-            <Image
-              src={HeaderImageSrc.tripIcon.src}
-              alt={HeaderImageSrc.tripIcon.alt}
-            ></Image>
+            <Image src={HeaderImageSrc.tripIcon.src} alt={HeaderImageSrc.tripIcon.alt}></Image>
             <div className={styles.TapContents}>
-              <div>트립토크</div>
+              <button onClick={onClickTripTalk}>트립토크</button>
               <div>숙박권 구매</div>
-              <div>마이 페이지</div>
+              <button onClick={onClickMyPage}>마이 페이지</button>
             </div>
           </div>
           <div className={styles.ProfileWrapper}>
-            <Image
-              src={HeaderImageSrc.profileIcon.src}
-              alt={HeaderImageSrc.profileIcon.alt}
-            ></Image>
+            <Image src={HeaderImageSrc.profileIcon.src} alt={HeaderImageSrc.profileIcon.alt}></Image>
             <button>
-              <Image
-                src={HeaderImageSrc.downArrow.src}
-                alt={HeaderImageSrc.downArrow.alt}
-              ></Image>
+              <Image src={HeaderImageSrc.downArrow.src} alt={HeaderImageSrc.downArrow.alt}></Image>
             </button>
           </div>
         </div>
