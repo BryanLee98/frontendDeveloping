@@ -9,6 +9,7 @@ import SEARCHBAR_COMPO from "@/components/boards-list/searchBar"
 import { FetchBoardsDocument } from "@/commons/graphql/graphql"
 import { Input } from "antd"
 import type { GetProps } from "antd"
+import TODAY_BEST_POST_COMPO from "@/components/boards-list/best-post/page"
 
 type SearchProps = GetProps<typeof Input.Search>
 const { Search } = Input
@@ -42,6 +43,7 @@ const PageList = () => {
 
   return (
     <>
+      <TODAY_BEST_POST_COMPO />
       <SEARCHBAR_COMPO
         Search={Search}
         onSearch={onSearch}
@@ -50,19 +52,8 @@ const PageList = () => {
         setPrevDate={setPrevDate}
         setEndDate={setEndDate}
       />
-      <PAGE_LIST_COMPO
-        keyword={keyword}
-        data={data}
-        page={page}
-        refetch={refetch}
-      />
-      <PAGINATION_COMPO
-        data={data}
-        page={page}
-        setPage={setPage}
-        refetch={refetch}
-        onClickPage={onClickPage}
-      />
+      <PAGE_LIST_COMPO keyword={keyword} data={data} page={page} refetch={refetch} />
+      <PAGINATION_COMPO data={data} page={page} setPage={setPage} refetch={refetch} onClickPage={onClickPage} />
     </>
   )
 }
