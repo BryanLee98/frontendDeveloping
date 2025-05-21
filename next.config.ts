@@ -1,7 +1,9 @@
 import type { NextConfig } from "next"
+import { hostname } from "os"
 
 const nextConfig: NextConfig = {
   /* config options here */
+  reactStrictMode: true,
   env: {
     GRAPHQL_ENDPOINT:
       process.env.NODE_ENV === "production"
@@ -17,5 +19,20 @@ const nextConfig: NextConfig = {
     ]
   },
 }
-
+module.exports = {
+  images: {
+    // domains: ["storage.googleapis.com/codecamp-file-storage/"],
+    // loader: "default",
+    // formats: ["image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+        port: "",
+        pathname: "/codecamp-file-storage/**",
+      },
+    ],
+    // remotePatterns: [new URL("https://storage.googleapis.com/codecamp-file-storage/**")],
+  },
+}
 export default nextConfig
