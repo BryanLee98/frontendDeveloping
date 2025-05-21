@@ -8,3 +8,10 @@ export interface TableData {
   date: string
   balance: number
 }
+
+export interface IPropsTrade {
+  data: any
+  page: number
+  isSoldout: boolean
+  search: string
+}

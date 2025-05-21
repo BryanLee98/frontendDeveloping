@@ -11,6 +11,19 @@ const CHANGE_PASSWORD_COMPO = () => {
           <div className={styles.headerText}>비밀번호 변경</div>
           <div className={styles.passwordContainer}>
             <div className={styles.passwordTextFrame}>
+              <span>기존 비밀번호 확인</span>
+              <span className={styles.essentialFill}>*</span>
+            </div>
+            <Space direction="vertical">
+              <Input.Password
+                size="large"
+                placeholder="기존 비밀번호를 입력하세요."
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              />
+            </Space>
+          </div>
+          <div className={styles.passwordContainer}>
+            <div className={styles.passwordTextFrame}>
               <span>새 비밀번호</span>
               <span className={styles.essentialFill}>*</span>
             </div>
@@ -36,6 +49,7 @@ const CHANGE_PASSWORD_COMPO = () => {
               />
             </Space>
           </div>
+
           <div className={styles.passwordButtonContainer}>
             <Button className={styles.changePasswordButton} size="large" type="primary">
               비밀번호 변경

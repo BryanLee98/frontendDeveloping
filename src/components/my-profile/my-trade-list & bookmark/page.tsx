@@ -4,7 +4,6 @@ import "@ant-design/v5-patch-for-react-19"
 import styles from "./styles.module.css"
 import Search from "antd/es/input/Search"
 import BOOKMARK_ITEM from "./bookmark-item/page"
-import { TableData } from "../types"
 import TRADE_LIST_ITEM from "./trade-list-item/page"
 import { useState } from "react"
 
@@ -12,23 +11,20 @@ type SearchProps = GetProps<typeof Input.Search>
 
 const TRADE_LIST_N_BOOKMARK = () => {
   const onSearch: SearchProps["onSearch"] = (value, _e, info) => console.log(info?.source, value)
+  const [activeTab, setActiveTab] = useState<"trade" | "bookmark">("trade")
+  const handleTabChange = (tab: "trade" | "bookmark") => setActiveTab(tab)
 
-  const [isListButtonClicked, setIsListButtonClicked] = useState(false)
-
-  const isShownListToggle = () => {
-    setIsListButtonClicked((prev) => !prev)
-  }
   return (
     <>
       <div className={styles.Layout}>
         <div className={styles.searchSwitchSection}>
           <div className={styles.searchBarContainer}>
             <div className={styles.switchButton}>
-              <Radio.Group size="large" defaultValue="a" buttonStyle="solid">
-                <Radio.Button onClick={isShownListToggle} disabled={!isListButtonClicked} value="a">
+              <Radio.Group size="large" value={activeTab} buttonStyle="solid">
+                <Radio.Button onClick={() => handleTabChange("trade")} value="trade">
                   나의 상품
                 </Radio.Button>
-                <Radio.Button onClick={isShownListToggle} disabled={isListButtonClicked} value="b">
+                <Radio.Button onClick={() => handleTabChange("bookmark")} value="bookmark">
                   북마크
                 </Radio.Button>
               </Radio.Group>
@@ -39,7 +35,8 @@ const TRADE_LIST_N_BOOKMARK = () => {
           </div>
         </div>
         {/* 테이블 섹션 */}
-        {!isListButtonClicked ? <TRADE_LIST_ITEM /> : <BOOKMARK_ITEM />}
+        {activeTab === "trade" && <TRADE_LIST_ITEM />}
+        {activeTab === "bookmark" && <BOOKMARK_ITEM />}
       </div>
     </>
   )

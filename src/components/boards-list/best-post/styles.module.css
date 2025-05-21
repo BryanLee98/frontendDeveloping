@@ -1,0 +1,99 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  align-self: stretch;
+}
+.bestArticleFrame {
+  margin-top: 10px;
+  display: flex;
+  width: 1080px;
+  max-width: 1980px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 0px;
+  align-items: flex-start;
+}
+
+.boardInnerBody {
+  width: 100%;
+}
+
+.headerText {
+  color: gray/800;
+  font-family: Pretendard Variable;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 24px;
+  display: flex;
+}
+
+.articleFrame,
+.articleContainer {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.imageFrame {
+  display: flex;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+}
+.imageContainer {
+  width: 112;
+  height: 152;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.articleContents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 120px;
+}
+.articleNProfileContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.articleTitle {
+  display: flex;
+  text-align: start;
+  font-family: Pretendard Variable;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.likesNDateContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.likes {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  font-size: 12px;
+  gap: 3px;
+}
+.Date {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  font-size: 10px;
+}

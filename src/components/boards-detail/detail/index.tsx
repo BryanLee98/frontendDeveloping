@@ -38,7 +38,8 @@ const boardDetailImg = {
 }
 
 const PAGE_DETAIL_COMPO = () => {
-  const { data, youtubeID, setYoutubeID, getYoutubeId, OnClickEditPage, onClickListPage } = USE_PAGE_DETAIL()
+  const { data, youtubeID, setYoutubeID, getYoutubeId, OnClickEditPage, onClickListPage, onClickLike, onClickDislike } =
+    USE_PAGE_DETAIL()
 
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     // access to player in all event handlers via event.target
@@ -96,14 +97,14 @@ const PAGE_DETAIL_COMPO = () => {
           </div>
 
           <div className={styles.dislikeOrLikeButtonFrame}>
-            <div className={styles.dislikeButton}>
+            <button onClick={onClickDislike} className={styles.dislikeButton}>
               <DislikeOutlined />
-              <div className={styles.dislikeText}>8</div>
-            </div>
-            <div className={styles.dislikeButton}>
+              <div className={styles.dislikeText}>{data?.fetchBoard.dislikeCount}</div>
+            </button>
+            <button onClick={onClickLike} className={styles.dislikeButton}>
               <LikeOutlined style={{ color: "red" }} />
-              <div className={styles.likeText}>39</div>
-            </div>
+              <div className={styles.likeText}>{data?.fetchBoard.likeCount}</div>
+            </button>
           </div>
 
           <footer className={styles.detailButtonContainer}>

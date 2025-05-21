@@ -13,7 +13,46 @@ const BOOKMARK_ITEM = () => {
       date: "2024.12.16",
       balance: 0,
     },
-    { id: 2, productName: "파트너스 호텔 제주", status: "", quantity: "326,000원", date: "2024.12.16", balance: 0 },
+    {
+      id: 2,
+      productName: "다이빙 일일 체험권",
+      status: "판매중",
+      quantity: "36,000원",
+      date: "2024.12.16",
+      balance: 0,
+    },
+    {
+      id: 3,
+      productName: "다이빙 일일 체험권",
+      status: "판매중",
+      quantity: "36,000원",
+      date: "2024.12.16",
+      balance: 0,
+    },
+    {
+      id: 4,
+      productName: "다이빙 일일 체험권",
+      status: "판매중",
+      quantity: "36,000원",
+      date: "2024.12.16",
+      balance: 0,
+    },
+    {
+      id: 5,
+      productName: "다이빙 일일 체험권",
+      status: "판매중",
+      quantity: "36,000원",
+      date: "2024.12.16",
+      balance: 0,
+    },
+    {
+      id: 6,
+      productName: "다이빙 일일 체험권",
+      status: "판매중",
+      quantity: "36,000원",
+      date: "2024.12.16",
+      balance: 0,
+    },
     // ...나머지 데이터 추가
   ]
   return (

@@ -1,27 +1,43 @@
 "use client"
 import "@ant-design/v5-patch-for-react-19"
 import styles from "./styles.module.css"
-import { TableData } from "../../types"
+import InfiniteScroll from "react-infinite-scroll-component"
+import { useParams } from "next/navigation"
+import { useState } from "react"
+import { FetchTravelproductsDocument } from "@/commons/graphql/graphql"
+import { useQuery } from "@apollo/client"
+import { IPropsTrade } from "../../types"
 
 const TRADE_LIST_ITEM = () => {
-  const tableData: TableData[] = [
-    {
-      id: 1,
-      productName: "파트너스 호텔 제주",
-      status: "판매 완료",
-      quantity: "326,000원",
-      date: "2024.12.16",
-      balance: 0,
-    },
-    { id: 2, productName: "파트너스 호텔 제주", status: "", quantity: "326,000원", date: "2024.12.16", balance: 0 },
-    { id: 3, productName: "파트너스 호텔 제주", status: "", quantity: "326,000원", date: "2024.12.16", balance: 0 },
-    { id: 4, productName: "파트너스 호텔 제주", status: "", quantity: "326,000원", date: "2024.12.16", balance: 0 },
-    { id: 5, productName: "파트너스 호텔 제주", status: "", quantity: "326,000원", date: "2024.12.16", balance: 0 },
-    { id: 6, productName: "파트너스 호텔 제주", status: "", quantity: "326,000원", date: "2024.12.16", balance: 0 },
-    { id: 7, productName: "파트너스 호텔 제주", status: "", quantity: "326,000원", date: "2024.12.16", balance: 0 },
+  // const params = useParams()
+  // const id = String(params?.boardID)
+  const [hasMore, setHasMore] = useState<boolean>(true)
+  const [page, setPage] = useState<number>(1)
+  const [isSoldout, setIsSoldOut] = useState<boolean>(false)
+  const [search, setSearch] = useState<string>("")
+  const { data, refetch, fetchMore } = useQuery(FetchTravelproductsDocument, {
+    variables: { page: page, isSoldout: isSoldout, search: search },
+  })
+  const fetchData = () => {
+    if (data === undefined) return
+    fetchMore({
+      variables: {
+        page: Math.ceil((data?.fetchTravelproducts.length ?? 10) / 10) + 1,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult || !fetchMoreResult.fetchTravelproducts.length) {
+          setHasMore(false)
+          return {
+            fetchTravelproducts: [...prev.fetchTravelproducts],
+          }
+        }
+        return {
+          fetchTravelproducts: [...prev.fetchTravelproducts, ...fetchMoreResult.fetchTravelproducts],
+        }
+      },
+    })
+  }
 
-    // ...나머지 데이터 추가
-  ]
   return (
     <>
       <div className={styles.listSection}>
@@ -35,17 +51,18 @@ const TRADE_LIST_ITEM = () => {
               <th>날짜</th>
             </tr>
           </thead>
-          <tbody>
-            {tableData.map((item, index) => (
-              <tr key={index}>
-                <td>{item.id}</td>
-                <td>{item.productName}</td>
-                <td>{item.status}</td>
-                <td>{item.quantity}</td>
-                <td>{item.date}</td>
+
+          {data?.fetchTravelproducts?.map((el: any, index: number) => (
+            <tbody>
+              <tr key={`${el}_${index}`}>
+                <td>{index + 1}</td>
+                <td>{el?.name}</td>
+                <td>{isSoldout}</td>
+                <td>{el?.price}</td>
+                <td>{el?.createdAt}</td>
               </tr>
-            ))}
-          </tbody>
+            </tbody>
+          ))}
         </table>
       </div>
     </>
