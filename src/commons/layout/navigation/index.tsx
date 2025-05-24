@@ -1,11 +1,11 @@
 "use client"
-
+import "@ant-design/v5-patch-for-react-19"
 import Image from "next/image"
 import styles from "./styles.module.css"
 import USE_NAVIGATION_HOOK from "./hooks"
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons"
+import { AppstoreOutlined, DownOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons"
 import type { MenuProps } from "antd"
-import { Menu } from "antd"
+import { Dropdown, Menu, Space } from "antd"
 import { useState } from "react"
 
 const HeaderImageSrc = {
@@ -52,8 +52,34 @@ const LAYOUT_NAVIGATION = () => {
       ),
     },
   ]
+  const profileItems: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "My Account",
+      disabled: true,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "2",
+      label: "Profile",
+      extra: "⌘P",
+    },
+    {
+      key: "3",
+      label: "Billing",
+      extra: "⌘B",
+    },
+    {
+      key: "4",
+      label: "Settings",
+      icon: <SettingOutlined />,
+      extra: "⌘S",
+    },
+  ]
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e)
+    // console.log("click ", e)
     setCurrent(e.key)
   }
   return (
@@ -71,9 +97,14 @@ const LAYOUT_NAVIGATION = () => {
           <div className={styles.profileNavFrame}>
             <div className={styles.ProfileWrapper}>
               <Image src={HeaderImageSrc.profileIcon.src} alt={HeaderImageSrc.profileIcon.alt}></Image>
-              <button>
-                <Image src={HeaderImageSrc.downArrow.src} alt={HeaderImageSrc.downArrow.alt}></Image>
-              </button>
+              {/* <button> */}
+              <Dropdown menu={{ items }}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <DownOutlined />
+                </a>
+              </Dropdown>
+              {/* <Image src={HeaderImageSrc.downArrow.src} alt={HeaderImageSrc.downArrow.alt}></Image> */}
+              {/* </button> */}
             </div>
           </div>
         </div>

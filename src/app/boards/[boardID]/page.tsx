@@ -1,5 +1,6 @@
 "use client"
 
+import { FloatButton } from "antd"
 import COMMENT_LIST_COMPO from "../../../components/boards-detail/comment-list"
 import COMMENT_WRITE_COMPO from "../../../components/boards-detail/comment-write"
 import PAGE_DETAIL_COMPO from "../../../components/boards-detail/detail"
@@ -22,6 +23,7 @@ const DetailPage = () => {
         setIsEdit={() => {}}
       />
       <COMMENT_LIST_COMPO />
+      <FloatButton.BackTop />
     </>
   )
 }
