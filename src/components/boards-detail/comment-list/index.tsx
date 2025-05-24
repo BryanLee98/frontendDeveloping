@@ -23,10 +23,7 @@ const COMMENT_LIST_COMPO = () => {
           }
         }
         return {
-          fetchBoardComments: [
-            ...prev.fetchBoardComments,
-            ...fetchMoreResult.fetchBoardComments,
-          ],
+          fetchBoardComments: [...prev.fetchBoardComments, ...fetchMoreResult.fetchBoardComments],
         }
       },
     })
@@ -48,12 +45,7 @@ const COMMENT_LIST_COMPO = () => {
         >
           {/* 여기에 반목문 map을 활용한 댓글 보이기 */}
           {data?.fetchBoardComments.map((el, index: number) => (
-            <COMMENT_ITEM
-              el={el}
-              index={index}
-              key={el._id}
-              length={data?.fetchBoardComments.length ?? 0}
-            />
+            <COMMENT_ITEM el={el} index={index} key={el._id} length={data?.fetchBoardComments.length ?? 0} />
           ))}
         </InfiniteScroll>
       </div>

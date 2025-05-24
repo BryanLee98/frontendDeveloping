@@ -1,23 +1,13 @@
 "use client"
 import "@ant-design/v5-patch-for-react-19"
 import styles from "./styles.module.css"
+import USE_TRADE_LIST_N_BOOKMARK from "./hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { useParams } from "next/navigation"
-import { useState } from "react"
-import { FetchTravelproductsDocument } from "@/commons/graphql/graphql"
-import { useQuery } from "@apollo/client"
-import { IPropsTrade } from "../../types"
 
 const TRADE_LIST_ITEM = () => {
-  // const params = useParams()
-  // const id = String(params?.boardID)
-  const [hasMore, setHasMore] = useState<boolean>(true)
-  const [page, setPage] = useState<number>(1)
-  const [isSoldout, setIsSoldOut] = useState<boolean>(false)
-  const [search, setSearch] = useState<string>("")
-  const { data, refetch, fetchMore } = useQuery(FetchTravelproductsDocument, {
-    variables: { page: page, isSoldout: isSoldout, search: search },
-  })
+  const { isSoldout, hasMore, setHasMore, data, fetchMore } = USE_TRADE_LIST_N_BOOKMARK()
+  const 판매완료 = <div style={{ color: "blue" }}>판매완료</div>
+  const 판매중 = <div style={{ color: "red" }}>판매중</div>
   const fetchData = () => {
     if (data === undefined) return
     fetchMore({
@@ -25,7 +15,7 @@ const TRADE_LIST_ITEM = () => {
         page: Math.ceil((data?.fetchTravelproducts.length ?? 10) / 10) + 1,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult || !fetchMoreResult.fetchTravelproducts.length) {
+        if (!fetchMoreResult.fetchTravelproducts.length) {
           setHasMore(false)
           return {
             fetchTravelproducts: [...prev.fetchTravelproducts],
@@ -41,29 +31,49 @@ const TRADE_LIST_ITEM = () => {
   return (
     <>
       <div className={styles.listSection}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>번호</th>
-              <th>상품 명</th>
-              <th>상태</th>
-              <th>금액</th>
-              <th>날짜</th>
-            </tr>
-          </thead>
-
-          {data?.fetchTravelproducts?.map((el: any, index: number) => (
-            <tbody>
-              <tr key={`${el}_${index}`}>
-                <td>{index + 1}</td>
-                <td>{el?.name}</td>
-                <td>{isSoldout}</td>
-                <td>{el?.price}</td>
-                <td>{el?.createdAt}</td>
+        <InfiniteScroll
+          next={fetchData}
+          hasMore={hasMore}
+          loader={<h3 style={{ textAlign: "center" }}>상품 로딩중...</h3>}
+          dataLength={data?.fetchTravelproducts.length ?? 0}
+          endMessage={
+            <p style={{ textAlign: "center", padding: "20px" }}>
+              <b>마지막 상품입니다.</b>
+            </p>
+          }
+        >
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: "center" }}>번호</th>
+                <th>상품 명</th>
+                <th style={{ textAlign: "center" }}>상태</th>
+                <th style={{ textAlign: "center" }}>가격</th>
+                <th style={{ textAlign: "center" }}>날짜</th>
               </tr>
+            </thead>
+
+            <tbody>
+              {(data?.fetchTravelproducts.length ?? 0 > 0) ? (
+                data?.fetchTravelproducts.map((el: any, index: number) => (
+                  <tr key={el._id}>
+                    <td style={{ textAlign: "center" }}>{index + 1}</td>
+                    <td>{el.name}</td>
+                    <td style={{ textAlign: "center" }}>{isSoldout ? 판매완료 : 판매중}</td>
+                    <td style={{ textAlign: "center" }}>{el.price?.toLocaleString()}원</td>
+                    <td style={{ textAlign: "center" }}>{el.createdAt.split("T")[0]}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} style={{ textAlign: "center" }}>
+                    데이터가 없습니다.
+                  </td>
+                </tr>
+              )}
             </tbody>
-          ))}
-        </table>
+          </table>
+        </InfiniteScroll>
       </div>
     </>
   )

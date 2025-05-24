@@ -1,5 +1,5 @@
 "use client"
-import { ConfigProvider, GetProps, Radio, Space, Input } from "antd"
+import { GetProps, Radio, Input } from "antd"
 import "@ant-design/v5-patch-for-react-19"
 import styles from "./styles.module.css"
 import Search from "antd/es/input/Search"
