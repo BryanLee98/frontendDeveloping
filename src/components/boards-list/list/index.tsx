@@ -6,10 +6,15 @@ import DeleteImage from "@/images/asset/delete.png"
 import { USE_PAGE_LIST } from "./hooks"
 import { Modal } from "antd"
 import { IBoardListProps } from "./types"
-
+import { useKeywordStore } from "@/commons/store/board_list_stores/store"
+type KeywordStore = {
+  keyword: string
+  setKeyword: (keyword: string) => void
+}
 const PAGE_LIST_COMPO = (props: IBoardListProps) => {
   const { isModalOpen, modalContent, deleteId, handleOk, handleCancel, setDeleteId, onClickDelete, onClickMove } =
     USE_PAGE_LIST(props)
+  const { keyword, setKeyword } = useKeywordStore() as KeywordStore
   return (
     <div className={styles.boardBody}>
       <div className={styles.boardFrame}>
@@ -35,13 +40,13 @@ const PAGE_LIST_COMPO = (props: IBoardListProps) => {
                 <div className={styles.contentTitle}>
                   <span style={{ margin: "10px" }}>
                     {el.title
-                      .replaceAll(props.keyword, `@#$${props.keyword}@#$`)
+                      .replaceAll(keyword, `@#$${keyword}@#$`)
                       .split("@#$")
                       .map((el, index) => (
                         <span
                           key={`${el}_${index}`}
                           style={{
-                            backgroundColor: el === `${props.keyword}` ? "skyblue" : "",
+                            backgroundColor: el === `${keyword}` ? "skyblue" : "",
                           }}
                         >
                           {el}

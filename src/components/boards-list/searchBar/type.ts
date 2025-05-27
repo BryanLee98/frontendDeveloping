@@ -1,19 +1,10 @@
-import {
-  Dispatch,
-  ForwardRefExoticComponent,
-  MouseEvent,
-  RefAttributes,
-  SetStateAction,
-  useState,
-} from "react"
+import { Dispatch, ForwardRefExoticComponent, MouseEvent, RefAttributes, SetStateAction, useState } from "react"
 import { SearchProps } from "antd/es/input"
 import type { GetProps, InputRef } from "antd"
 
 export interface ISearch {
-  keyword: string
-  setKeyword: Dispatch<SetStateAction<string>>
-  setPrevDate: Dispatch<SetStateAction<Date | null>>
-  setEndDate: Dispatch<SetStateAction<Date | null>>
+  setPrevDate: (date: Date | null) => void
+  setEndDate: (date: Date | null) => void
   Search: ForwardRefExoticComponent<SearchProps & RefAttributes<InputRef>>
   onSearch:
     | ((

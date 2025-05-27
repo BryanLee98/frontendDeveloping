@@ -4,13 +4,16 @@ import { FetchBoardsCountDocument } from "@/commons/graphql/graphql"
 import { useQuery } from "@apollo/client"
 import { Pagination, PaginationProps } from "antd"
 import { IPaginationProps } from "./type"
-import { MouseEvent } from "react"
-
+import { usePageStore } from "@/commons/store/board_list_stores/store"
+type PageStore = {
+  page: number
+  setPage: (page: number) => void
+}
 const PAGINATION_COMPO = (props: IPaginationProps) => {
   const { data, refetch } = useQuery(FetchBoardsCountDocument)
-
+  const { page, setPage } = usePageStore() as PageStore
   const onChangePage: PaginationProps["onChange"] = (page) => {
-    props.setPage(page)
+    setPage(page)
   }
 
   return (
@@ -20,7 +23,7 @@ const PAGINATION_COMPO = (props: IPaginationProps) => {
           align="center"
           defaultPageSize={10}
           onChange={onChangePage}
-          current={props.page}
+          current={page}
           total={data?.fetchBoardsCount}
         />
       ) : (

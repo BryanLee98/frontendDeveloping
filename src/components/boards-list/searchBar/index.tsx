@@ -7,6 +7,7 @@ import "@ant-design/v5-patch-for-react-19"
 import { Button, DatePicker } from "antd"
 import dayjs from "dayjs"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 const Images = {
   newPost: {
@@ -14,7 +15,6 @@ const Images = {
     alt: "이미지 추가",
   },
 }
-
 const { RangePicker } = DatePicker
 const dateFormat = "YYYY/MM/DD"
 
@@ -34,14 +34,10 @@ const SEARCHBAR_COMPO = (props: ISearch) => {
               <div className={styles.datePicker}>
                 <RangePicker
                   size="large"
-                  defaultValue={[
-                    dayjs("0000/00/00", dateFormat),
-                    dayjs("0000/00/00", dateFormat),
-                  ]}
+                  defaultValue={[dayjs("0000/00/00", dateFormat), dayjs("0000/00/00", dateFormat)]}
                   format={dateFormat}
                   onChange={(date: any) => {
-                    date &&
-                      (props.setPrevDate(date[0]), props.setEndDate(date[1]))
+                    date && (props.setPrevDate(date[0]), props.setEndDate(date[1]))
                   }}
                 />
               </div>
@@ -55,13 +51,8 @@ const SEARCHBAR_COMPO = (props: ISearch) => {
                 />
               </div>
               <div className={styles.newPost}>
-                <Button
-                  size="large"
-                  color="cyan"
-                  variant="solid"
-                  onClick={onClickNewPost}
-                >
-                  새 게시글 등록하기
+                <Button size="large" color="cyan" variant="solid" onClick={onClickNewPost}>
+                  <Image src={Images.newPost.src} alt="" />새 게시글 등록하기
                 </Button>
               </div>
             </div>
