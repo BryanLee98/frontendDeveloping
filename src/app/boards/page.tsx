@@ -10,19 +10,31 @@ import { FetchBoardsDocument } from "@/commons/graphql/graphql"
 import { Input } from "antd"
 import type { GetProps } from "antd"
 import TODAY_BEST_POST_COMPO from "@/components/boards-list/best-post/page"
+import { useKeywordStore, usePageStore, useDateStore } from "@/commons/store/board_list_stores/store"
 
 type SearchProps = GetProps<typeof Input.Search>
-const { Search } = Input
-
+type KeywordStore = {
+  keyword: string
+  setKeyword: (keyword: string) => void
+}
+type PageStore = {
+  page: number
+  setPage: (page: number) => void
+}
 const PageList = () => {
-  const [page, setPage] = useState<number>(1)
-  const [keyword, setKeyword] = useState<string>("")
-  const [prevDate, setPrevDate] = useState<Date | null>(null)
-  const [endDate, setEndDate] = useState<Date | null>(null)
+  const { Search } = Input
+  const { page, setPage } = usePageStore() as PageStore
+  const { keyword, setKeyword } = useKeywordStore() as KeywordStore
+  const { prevDate, endDate, setPrevDate, setEndDate } = useDateStore() as {
+    prevDate: Date | null
+    endDate: Date | null
+    setPrevDate: (date: Date | null) => void
+    setEndDate: (date: Date | null) => void
+  }
   const { data, refetch } = useQuery(FetchBoardsDocument, {
     variables: { page: page, startDate: prevDate, endDate: endDate },
+    // fetchPolicy: "cache-only"
   })
-
   const getDebounce = _.debounce((eventValue) => {
     refetch({
       search: eventValue,
@@ -44,16 +56,9 @@ const PageList = () => {
   return (
     <>
       <TODAY_BEST_POST_COMPO />
-      <SEARCHBAR_COMPO
-        Search={Search}
-        onSearch={onSearch}
-        keyword={keyword}
-        setKeyword={setKeyword}
-        setPrevDate={setPrevDate}
-        setEndDate={setEndDate}
-      />
-      <PAGE_LIST_COMPO keyword={keyword} data={data} page={page} refetch={refetch} />
-      <PAGINATION_COMPO data={data} page={page} setPage={setPage} refetch={refetch} onClickPage={onClickPage} />
+      <SEARCHBAR_COMPO Search={Search} onSearch={onSearch} setPrevDate={setPrevDate} setEndDate={setEndDate} />
+      <PAGE_LIST_COMPO data={data} refetch={refetch} />
+      <PAGINATION_COMPO data={data} refetch={refetch} onClickPage={onClickPage} />
     </>
   )
 }
