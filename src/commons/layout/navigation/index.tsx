@@ -26,7 +26,7 @@ const HeaderImageSrc = {
 type MenuItem = Required<MenuProps>["items"][number]
 
 const LAYOUT_NAVIGATION = () => {
-  const { onClickMyPage, onClickTripTalk } = USE_NAVIGATION_HOOK()
+  const { onClickMyPage, onClickTripTalk, onClickShoppingPage } = USE_NAVIGATION_HOOK()
   const [current, setCurrent] = useState("mail")
 
   const items: MenuItem[] = [
@@ -39,7 +39,11 @@ const LAYOUT_NAVIGATION = () => {
       key: "mail",
     },
     {
-      label: <div className={styles.TapContents}>숙박권 구매</div>,
+      label: (
+        <div className={styles.TapContents} onClick={onClickShoppingPage}>
+          숙박권 구매
+        </div>
+      ),
       key: "app",
     },
 

@@ -11,9 +11,14 @@ const USE_NAVIGATION_HOOK = () => {
   const onClickTripTalk = () => {
     router.push("/boards/")
   }
+
+  const onClickShoppingPage = () => {
+    router.push("/shop/")
+  }
   return {
     onClickMyPage,
     onClickTripTalk,
+    onClickShoppingPage,
   }
 }
 export default USE_NAVIGATION_HOOK
