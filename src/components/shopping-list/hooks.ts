@@ -32,6 +32,7 @@ const USE_SHOPPING_LIST = () => {
         }
       },
     })
+    console.log(data)
   }
   return {
     isSoldout,

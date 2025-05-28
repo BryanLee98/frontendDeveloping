@@ -54,25 +54,6 @@ const SHOPPING_NEW_POST_COMPO = () => {
 
   return (
     <>
-      {/* <div className={styles.Layout}>
-        <div className={styles.boxContainer}>
-          <div className={styles.titleTextStyle}>숙박권 판매하기</div>
-
-          <div className={styles.enrollText}>
-            <div className={styles.enrollHalf}>
-              <div className={styles.textAlignColumn}>
-                <div className={styles.textStyle}>상품명</div>
-                <span className={styles.essentialFill}>*</span>
-              </div>
-              <input className={styles.enrollInput} id="name" />
-              <div className={styles.errorText}></div>
-            </div>
-          </div>
-
-          <div className={styles.enrollBorder}></div>
-        </div>
-      </div> */}
-
       <div className={styles.container}>
         <h1 className={styles.title}>숙박권 판매하기</h1>
 
