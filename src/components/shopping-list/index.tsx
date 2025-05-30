@@ -20,7 +20,7 @@ const IMAGES = {
 }
 
 const SHOPPING_LIST_PAGE_COMPO = () => {
-  const { isSoldout, search, hasMore, data, sliceContentText, fetchData } = USE_SHOPPING_LIST()
+  const { isSoldout, search, hasMore, data, sliceContentText, fetchData, onClickMove } = USE_SHOPPING_LIST()
   const { keyword, setKeyword } = useKeywordStore() as KeywordStore
   return (
     <>
@@ -37,7 +37,7 @@ const SHOPPING_LIST_PAGE_COMPO = () => {
       >
         <div className={styles.gridContainer}>
           {data?.fetchTravelproducts.map((el, index) => (
-            <div key={`${el}_${index}`} className={styles.gridItem}>
+            <div key={`${el}_${index}`} className={styles.gridItem} onClick={(event) => onClickMove(event, el?._id)}>
               <Image
                 unoptimized={true}
                 src={el.images ? `https://storage.googleapis.com/${el.images?.[0]}` : IMAGES.defaultImage.src}
@@ -63,7 +63,7 @@ const SHOPPING_LIST_PAGE_COMPO = () => {
                     ))}
                 </span>
               </div>
-              <div className={styles.itemContent}>{sliceContentText(el.contents)}</div>
+              <div className={styles.itemContent}>{sliceContentText(el.remarks)}</div>
               <div className={styles.tagContainer}>
                 {el?.tags?.map((tag, tagIndex) => (
                   <span key={tagIndex} className={styles.tag}>

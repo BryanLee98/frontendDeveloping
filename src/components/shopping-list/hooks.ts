@@ -1,8 +1,11 @@
 "use client"
 import { useQuery } from "@apollo/client"
+import { useRouter } from "next/navigation"
+import { MouseEvent, useState } from "react"
 import { FetchTravelproductsDocument } from "@/commons/graphql/graphql"
-import { useState } from "react"
+
 const USE_SHOPPING_LIST = () => {
+  const router = useRouter()
   const [isSoldout, setIsSoldout] = useState<boolean>(false)
   const [search, setSearch] = useState<string>("")
   const [hasMore, setHasMore] = useState<boolean>(true)
@@ -34,6 +37,11 @@ const USE_SHOPPING_LIST = () => {
     })
     console.log(data)
   }
+
+  const onClickMove = (event: MouseEvent, id: string) => {
+    event.stopPropagation()
+    router.push(`/shop/${id}`)
+  }
   return {
     isSoldout,
     search,
@@ -41,6 +49,7 @@ const USE_SHOPPING_LIST = () => {
     data,
     sliceContentText,
     fetchData,
+    onClickMove,
   }
 }
 

@@ -44,10 +44,7 @@ const COMMENT_WRITE_COMPO = ({ isEdit, el, setIsEdit }: IPropsCommentWrite) => {
             </div>
 
             <div>
-              <Rate
-                onChange={(e) => onChangeStarRate(e)}
-                defaultValue={isEdit ? el.rating : 0}
-              />
+              <Rate onChange={(e) => onChangeStarRate(e)} defaultValue={isEdit ? el.rating : 0} />
             </div>
             <div className={styles.commentUserInput}>
               <div className={styles.userTitle}>
@@ -57,7 +54,7 @@ const COMMENT_WRITE_COMPO = ({ isEdit, el, setIsEdit }: IPropsCommentWrite) => {
                 </div>
                 <div>
                   <input
-                    value={isEdit ? el?.writer ?? "" : writer}
+                    value={isEdit ? (el?.writer ?? "") : writer}
                     onChange={onChangeCommentWriter}
                     placeholder="작성자 명을 입력해 주세요."
                     className={styles.commentWriterInput}
@@ -92,10 +89,7 @@ const COMMENT_WRITE_COMPO = ({ isEdit, el, setIsEdit }: IPropsCommentWrite) => {
             <div className={styles.buttonBody}>
               {isEdit ? (
                 <>
-                  <button
-                    className={styles.commentCancelButton}
-                    onClick={() => setIsEdit(false)}
-                  >
+                  <button className={styles.commentCancelButton} onClick={() => setIsEdit(false)}>
                     취소
                   </button>
                   <button

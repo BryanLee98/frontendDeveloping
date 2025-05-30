@@ -3,9 +3,9 @@
 import styles from "./styles.module.css"
 import { USE_COMMENT_LIST } from "./hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
-import COMMENT_ITEM from "../comment-list-item"
+import PRODUCT_COMMENT_ITEM from "../comment-list-item"
 
-const COMMENT_LIST_COMPO = () => {
+const PRODUCT_COMMENT_LIST_COMPO = () => {
   const { data, hasMore, setHasMore, fetchMore, fetchData } = USE_COMMENT_LIST()
 
   return (
@@ -14,8 +14,8 @@ const COMMENT_LIST_COMPO = () => {
         <InfiniteScroll
           next={fetchData}
           hasMore={hasMore}
-          loader={<h3>댓글 로딩중...</h3>}
-          dataLength={data?.fetchBoardComments.length ?? 0}
+          loader={<h3>문의 로딩중...</h3>}
+          dataLength={data?.fetchTravelproductQuestions.length ?? 0}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>마지막 댓글입니다.</b>
@@ -23,8 +23,13 @@ const COMMENT_LIST_COMPO = () => {
           }
         >
           {/* 여기에 반목문 map을 활용한 댓글 보이기 */}
-          {data?.fetchBoardComments.map((el, index: number) => (
-            <COMMENT_ITEM el={el} index={index} key={el._id} length={data?.fetchBoardComments.length ?? 0} />
+          {data?.fetchTravelproductQuestions.map((el: any, index: number) => (
+            <PRODUCT_COMMENT_ITEM
+              el={el}
+              index={index}
+              key={el._id}
+              length={data?.fetchTravelproductQuestions.length ?? 0}
+            />
           ))}
         </InfiniteScroll>
       </div>
@@ -32,4 +37,4 @@ const COMMENT_LIST_COMPO = () => {
   )
 }
 
-export default COMMENT_LIST_COMPO
+export default PRODUCT_COMMENT_LIST_COMPO

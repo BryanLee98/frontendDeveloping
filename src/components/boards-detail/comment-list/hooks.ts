@@ -15,5 +15,25 @@ export const USE_COMMENT_LIST = () => {
       boardId: id,
     },
   })
-  return { hasMore, setHasMore, data, fetchMore }
+  const fetchData = () => {
+    if (data === undefined) return
+    fetchMore({
+      variables: {
+        page: Math.ceil((data?.fetchBoardComments.length ?? 10) / 10) + 1,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fetchBoardComments.length) {
+          setHasMore(false)
+          // return prev;
+          return {
+            fetchBoardComments: [...prev.fetchBoardComments],
+          }
+        }
+        return {
+          fetchBoardComments: [...prev.fetchBoardComments, ...fetchMoreResult.fetchBoardComments],
+        }
+      },
+    })
+  }
+  return { hasMore, setHasMore, data, fetchMore, fetchData }
 }
