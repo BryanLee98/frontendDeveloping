@@ -6,7 +6,8 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: var(--Pretendard);
+  /* font-family: var(--Pretendard); */
+  font-family: Pretendard Variable;
 }
 
 /* :root {

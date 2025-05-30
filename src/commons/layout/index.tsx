@@ -20,7 +20,10 @@ const LAYOUT = (props: IHeaderChildren) => {
 
   if (pathName && pathName.includes("edit")) URL_Convert()
 
-  const isHiddenHeader = HIDDEN_HEADER.includes(pathName || "") || (pathName && pathName.includes("/profile"))
+  const isHiddenHeader =
+    HIDDEN_HEADER.includes(pathName || "") ||
+    (pathName && pathName.includes("/profile")) ||
+    (pathName && pathName.includes("/new"))
   return (
     <>
       <LAYOUT_NAVIGATION />
