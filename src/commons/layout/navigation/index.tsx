@@ -6,7 +6,7 @@ import USE_NAVIGATION_HOOK from "./hooks"
 import { AppstoreOutlined, DownOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons"
 import type { MenuProps } from "antd"
 import { Dropdown, Menu, Space } from "antd"
-import { useState } from "react"
+import { useNavigationStore } from "@/commons/store/navigation_stores/store"
 
 const HeaderImageSrc = {
   tripIcon: {
@@ -23,12 +23,17 @@ const HeaderImageSrc = {
   },
 }
 
+type NavigationStore = {
+  current: string
+  setCurrent: (current: string) => void
+}
+
 type MenuItem = Required<MenuProps>["items"][number]
 
 const LAYOUT_NAVIGATION = () => {
   const { onClickMyPage, onClickTripTalk, onClickShoppingPage } = USE_NAVIGATION_HOOK()
-  const [current, setCurrent] = useState("mail")
-
+  // const [current, setCurrent] = useState("mail")
+  const { current, setCurrent } = useNavigationStore() as NavigationStore
   const items: MenuItem[] = [
     {
       label: (
