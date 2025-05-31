@@ -1,7 +1,6 @@
 "use client"
 import styles from "./styles.module.css"
 import Image from "next/image"
-import { Rate } from "antd"
 import { IPropsCommentItem } from "./type"
 import { useState } from "react"
 
@@ -24,13 +23,12 @@ const PRODUCT_COMMENT_ITEM = ({ el, index, length }: IPropsCommentItem) => {
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
   return (
-    <div key={el?._id} className={styles.commentItem}>
+    <div key={`${el?._id}_${index}`} className={styles.commentItem}>
       <div className={styles.listBody}>
         <div className={styles.listTitle}>
           <div className={styles.forwardTitle}>
             <Image src={CommentImageSrc.profileIcon.src} alt={CommentImageSrc.profileIcon.alt} />
-            <div className={styles.forwardTitleText}>{el?.writer}</div>
-            <Rate disabled defaultValue={el?.rating} />
+            <div className={styles.forwardTitleText}>{el?.user.name}</div>
           </div>
           <div>
             <div className={styles.backTitle}>

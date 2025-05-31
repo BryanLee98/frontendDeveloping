@@ -17,8 +17,8 @@ const PRODUCT_COMMENT_LIST_COMPO = () => {
           loader={<h3>문의 로딩중...</h3>}
           dataLength={data?.fetchTravelproductQuestions.length ?? 0}
           endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>마지막 댓글입니다.</b>
+            <p style={{ textAlign: "center", padding: "20px 0px" }}>
+              <b>마지막 문의 글입니다.</b>
             </p>
           }
         >
