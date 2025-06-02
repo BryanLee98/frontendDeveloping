@@ -1,56 +1,47 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  orderBy,
-  DocumentData,
-} from "firebase/firestore"
+import PAGE_LIST_COMPO from "@/components/boards-list/list"
+import PAGINATION_COMPO from "@/components/boards-list/pagination"
+import { useQuery } from "@apollo/client"
+import { MouseEvent, useState } from "react"
 import _ from "lodash"
-import OPEN_API_PAGE_LIST_COMPONENT from "@/components/open-api-list"
-import { app } from "@/commons/libraries/firebase"
-import API_PAGINATION_COMPO from "@/components/open-api-list/pagination"
-import SEARCH_HEADER_COMPONENT from "@/components/open-api-list/search"
+import SEARCHBAR_COMPO from "@/components/boards-list/searchBar"
+import { FetchBoardsDocument } from "@/commons/graphql/graphql"
 import { Input } from "antd"
 import type { GetProps } from "antd"
+import TODAY_BEST_POST_COMPO from "@/components/boards-list/best-post/page"
+import { useKeywordStore, usePageStore, useDateStore } from "@/commons/store/board_list_stores/store"
 
 type SearchProps = GetProps<typeof Input.Search>
-const { Search } = Input
-
-const OPEN_API_PAGE = () => {
-  const [dataList, setDataList] = useState<DocumentData>([])
-  const [keyword, setKeyword] = useState<string>("")
-  const [prevDate, setPrevDate] = useState<Date | null>(null)
-  const [endDate, setEndDate] = useState<Date | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
-  const itemsPerPage = 10
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const db = getFirestore(app)
-      const boardCollection = collection(db, "board")
-
-      // 데이터를 날짜별로 내림차순 정렬
-      const boardQuery = query(boardCollection, orderBy("date", "desc"))
-      const snapshot = await getDocs(boardQuery)
-
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
-
-      setDataList(data)
-      setTotalCount(data.length) // 총 데이터 개수 설정
-    }
-
-    fetchData()
-  }, [])
-
+type KeywordStore = {
+  keyword: string
+  setKeyword: (keyword: string) => void
+}
+type PageStore = {
+  page: number
+  setPage: (page: number) => void
+}
+const PageList = () => {
+  const { Search } = Input
+  const { page, setPage } = usePageStore() as PageStore
+  const { keyword, setKeyword } = useKeywordStore() as KeywordStore
+  const { prevDate, endDate, setPrevDate, setEndDate } = useDateStore() as {
+    prevDate: Date | null
+    endDate: Date | null
+    setPrevDate: (date: Date | null) => void
+    setEndDate: (date: Date | null) => void
+  }
+  const { data, refetch } = useQuery(FetchBoardsDocument, {
+    variables: { page: page, startDate: prevDate, endDate: endDate },
+    // fetchPolicy: "cache-only"
+  })
   const getDebounce = _.debounce((eventValue) => {
+    refetch({
+      search: eventValue,
+      page: 1,
+      startDate: prevDate,
+      endDate: endDate,
+    })
     setKeyword(eventValue)
   }, 400)
 
@@ -58,39 +49,18 @@ const OPEN_API_PAGE = () => {
     getDebounce(value)
     console.log(info?.source, value)
   }
-
-  // 현재 페이지에 해당하는 데이터 계산
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const currentData = dataList.slice(startIndex, endIndex)
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
+  const onClickPage = (event: MouseEvent<HTMLSpanElement>) => {
+    refetch({ page: Number(event.currentTarget.id) })
   }
 
   return (
-    <div>
-      <SEARCH_HEADER_COMPONENT
-        keyword={keyword}
-        Search={Search}
-        onSearch={onSearch}
-        setKeyword={setKeyword}
-        setPrevDate={setPrevDate}
-        setEndDate={setEndDate}
-      />
-      <OPEN_API_PAGE_LIST_COMPONENT
-        keyword={keyword}
-        currentData={currentData}
-      />
-      <API_PAGINATION_COMPO
-        currentData={currentData}
-        currentPage={currentPage}
-        totalCount={totalCount}
-        itemsPerPage={itemsPerPage}
-        handlePageChange={handlePageChange}
-      />
-    </div>
+    <>
+      <TODAY_BEST_POST_COMPO />
+      <SEARCHBAR_COMPO Search={Search} onSearch={onSearch} setPrevDate={setPrevDate} setEndDate={setEndDate} />
+      <PAGE_LIST_COMPO data={data} refetch={refetch} />
+      <PAGINATION_COMPO data={data} refetch={refetch} onClickPage={onClickPage} />
+    </>
   )
 }
 
-export default OPEN_API_PAGE
+export default PageList
