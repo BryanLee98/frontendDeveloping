@@ -1,18 +1,5 @@
 import { gql } from "@apollo/client"
 
-export const FETCH_COMMENTS = gql`
-  query FetchBoardComments($page: Int, $boardId: ID!) {
-    fetchBoardComments(page: $page, boardId: $boardId) {
-      _id
-      writer
-      contents
-      rating
-      createdAt
-      updatedAt
-    }
-  }
-`
-
 export const FETCH_TRAVEL_PRODUCT_QUESTIONS = gql`
   query FetchTravelProductQuestions($page: Int, $travelproductId: ID!) {
     fetchTravelproductQuestions(page: $page, travelproductId: $travelproductId) {
@@ -21,10 +8,7 @@ export const FETCH_TRAVEL_PRODUCT_QUESTIONS = gql`
       travelproduct {
         _id
         name
-        remarks
         contents
-        price
-        tags
       }
       user {
         _id
@@ -41,19 +25,9 @@ export const FETCH_TRAVEL_PRODUCT_QUESTIONS = gql`
 
 export const FETCH_TRAVEL_PRODUCT_QUESTIONS_ANSWERS = gql`
   query FetchTravelProductQuestionsAnswers($page: Int, $travelproductQuestionId: ID!) {
-    fetchTravelproductQuestionsAnswers(page: $page, travelproductQuestionId: $travelproductQuestionId) {
+    fetchTravelproductQuestionAnswers(page: $page, travelproductQuestionId: $travelproductQuestionId) {
       _id
       contents
-      travelproductQuestion {
-        _id
-        contents
-        user {
-          _id
-          email
-          name
-          picture
-        }
-      }
       user {
         _id
         email

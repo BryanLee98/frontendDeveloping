@@ -1,65 +1,4 @@
-/* .Layout {
-  display: flex;
-  width: 100%;
-  min-width: 1280px;
-  padding: 40px 20px 40px 20px;
-  justify-content: center;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-}
-
-.titleTextStyle {
-  width: 1280;
-  height: 28;
-  font-family: Pretendard;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: 0%;
-}
-
-.boxContainer {
-  display: flex;
-  flex-direction: column;
-  width: 1280;
-  height: 1440;
-  gap: 40px;
-}
-
-.enrollHalf {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.enrollBorder {
-  width: 1280px;
-  height: 1px;
-  background: var(--gray-100, #e4e4e4);
-}
-
-.enrollText {
-  display: flex;
-  flex-direction: row;
-  width: 1280;
-  height: 80;
-  gap: 30px;
-}
-
-.essentialFill {
-  color: red;
-}
-
-.textAlignColumn {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  align-self: stretch;
-} */
-
-.container {
+.Layout {
   gap: 130px;
   width: 100%;
   max-width: 1280px;
@@ -79,15 +18,15 @@
 .form {
   padding: 30px;
   border-radius: 8px;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .fieldGroup {
-  margin-bottom: 25px;
+  margin: 25px 0px;
 }
 
 .label {
-  display: block;
+  display: flex;
+  gap: 5px;
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 8px;
@@ -104,7 +43,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
-  /* background-color: #f8f9fa; */
+  background-color: #f8f9fa;
   transition: border-color 0.2s;
 }
 
@@ -166,6 +105,9 @@
 }
 
 .locationSection {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 25px;
 }
 
@@ -173,6 +115,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 15px;
   margin-bottom: 12px;
 }
 
@@ -182,7 +125,7 @@
   align-items: center;
 }
 
-.coordinateInput {
+.addressInput {
   width: 100px;
   padding: 8px 12px;
   border: 1px solid #ddd;
@@ -213,6 +156,8 @@
 }
 
 .coordsSection {
+  /* display: flex;
+  width: 100%; */
   margin-top: 15px;
 }
 
@@ -223,8 +168,10 @@
 }
 
 .coordGroup {
+  display: flex;
   flex: 1;
-  gap: 20px;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .coordLabel {
@@ -255,7 +202,7 @@
 
 .mapContainer {
   width: 100%;
-  height: 120px;
+  height: 170px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f8f9fa;

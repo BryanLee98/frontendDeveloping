@@ -10,6 +10,8 @@ import {
 } from "@/commons/graphql/graphql"
 import { Address } from "react-daum-postcode"
 import { IMAGE_FILE_VALIDATION } from "./ImageFileValidation"
+import { HandleEnroll } from "./HandleEnroll"
+import { IHandleEnrollProps } from "./types"
 
 export const USE_BOARD_WRITE = (isEdit: boolean) => {
   const router = useRouter()
@@ -191,9 +193,14 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     fileRef.current?.click()
   }
 
+  // const onClickEnroll = (props: IHandleEnrollProps) => {
+  //   const result = HandleEnroll(props)
+  //   if (!result) return
+  // }
   //버튼을 클릭하면 검증을 해라
   const onClickEnroll = async (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation()
+
     // 새로운 게시글 등록의 경우
     if (isEdit === false) {
       let haveError = false

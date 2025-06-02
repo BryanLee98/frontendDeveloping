@@ -35,7 +35,6 @@ const USE_SHOPPING_LIST = () => {
         }
       },
     })
-    console.log(data)
   }
 
   const onClickMove = (event: MouseEvent, id: string) => {

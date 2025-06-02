@@ -1,60 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import USE_SHOPPING_NEW_POST from "./hooks"
 import styles from "./styles.module.css"
-interface SurveyFormData {
-  name: string
-  koreanName: string
-  content: string
-  file: File | null
-  tags: string[]
-  coordinates: string
-  latitude: string
-  longitude: string
-}
 
 const SHOPPING_NEW_POST_COMPO = () => {
-  const [formData, setFormData] = useState<SurveyFormData>({
-    name: "",
-    koreanName: "",
-    content: "",
-    file: null,
-    tags: [],
-    coordinates: "",
-    latitude: "",
-    longitude: "",
-  })
-
-  const [showLocationFinder, setShowLocationFinder] = useState(false)
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null
-    setFormData((prev) => ({
-      ...prev,
-      file,
-    }))
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-  }
-
-  const toggleLocationFinder = () => {
-    setShowLocationFinder(!showLocationFinder)
-  }
-
+  const { inputs, address, handleInputChange, handleSubmit, toggleLocationFinder, onClickPost, onClickCancel } =
+    USE_SHOPPING_NEW_POST()
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.Layout}>
         <h1 className={styles.title}>숙박권 판매하기</h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -65,7 +19,7 @@ const SHOPPING_NEW_POST_COMPO = () => {
             <input
               type="text"
               name="name"
-              value={formData.name}
+              value={inputs.name}
               onChange={handleInputChange}
               placeholder="상품명을 입력해 주세요."
               className={styles.input}
@@ -79,8 +33,8 @@ const SHOPPING_NEW_POST_COMPO = () => {
             </label>
             <input
               type="text"
-              name="shorten"
-              value={formData.koreanName}
+              name="remarks"
+              value={inputs.remarks}
               onChange={handleInputChange}
               placeholder="상품을 한 줄로 요약해주세요."
               className={styles.input}
@@ -131,8 +85,8 @@ const SHOPPING_NEW_POST_COMPO = () => {
               </button>
             </div>
             <textarea
-              name="content"
-              value={formData.content}
+              name="contents"
+              value={inputs.contents}
               onChange={handleInputChange}
               placeholder="내용을 입력해 주세요."
               className={styles.textarea}
@@ -162,11 +116,11 @@ const SHOPPING_NEW_POST_COMPO = () => {
               <div className={styles.locationFinder}>
                 <input
                   type="text"
-                  placeholder="01234"
-                  className={styles.coordinateInput}
-                  value={formData.coordinates}
-                  onChange={handleInputChange}
                   name="coordinates"
+                  placeholder="01234"
+                  className={styles.addressInput}
+                  value={address.address}
+                  onChange={handleInputChange}
                 />
                 <button type="button" className={styles.locationBtn} onClick={toggleLocationFinder}>
                   우편번호 찾기
@@ -182,22 +136,20 @@ const SHOPPING_NEW_POST_COMPO = () => {
                   <label className={styles.coordLabel}>위도(LAT)</label>
                   <input
                     type="text"
-                    placeholder="추소를 먼저 업력해 주세요."
+                    placeholder="주소를 먼저 업력해 주세요."
                     className={styles.coordInput}
-                    value={formData.latitude}
+                    value={address.lat}
                     onChange={handleInputChange}
                     name="latitude"
-                    disabled
                   />
                   <label className={styles.coordLabel}>경도(LNG)</label>
                   <input
                     type="text"
-                    placeholder="추소를 먼저 업력해 주세요."
+                    placeholder="주소를 먼저 업력해 주세요."
                     className={styles.coordInput}
-                    value={formData.longitude}
+                    value={address.lng}
                     onChange={handleInputChange}
                     name="longitude"
-                    disabled
                   />
                 </div>
 
@@ -216,15 +168,15 @@ const SHOPPING_NEW_POST_COMPO = () => {
             <div className={styles.fileUpload}>
               <div className={styles.uploadIcon}>+</div>
               <span className={styles.uploadText}>클릭하여 사진 업로드</span>
-              <input type="file" onChange={handleFileChange} className={styles.fileInput} accept="image/*" />
+              <input type="file" className={styles.fileInput} accept="image/*" />
             </div>
           </div>
 
           <div className={styles.buttonGroup}>
-            <button type="button" className={styles.cancelBtn}>
+            <button className={styles.cancelBtn} onClick={onClickCancel}>
               취소
             </button>
-            <button type="submit" className={styles.submitBtn}>
+            <button className={styles.submitBtn} onClick={onClickPost}>
               등록
             </button>
           </div>

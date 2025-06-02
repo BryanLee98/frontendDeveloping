@@ -49,7 +49,7 @@ export const HandleEnroll = (props: IHandleEnrollProps) => {
                 address: props.address,
                 addressDetail: props.detailAddress,
               },
-              images: ["", ""],
+              // images: props.,
             },
           },
         })
