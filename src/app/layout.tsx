@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import localFont from "next/font/local"
+import ApolloSetting from "@/commons/settings/apollo-settings"
 import LAYOUT from "@/commons/layout"
-import ApolloHeaderSetting from "@/commons/settings/apollo-settings"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +28,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${myLocalFont.variable}`}>
-        <ApolloHeaderSetting>
+        <ApolloSetting>
           <LAYOUT>{children}</LAYOUT>
-        </ApolloHeaderSetting>
+        </ApolloSetting>
       </body>
     </html>
   )
