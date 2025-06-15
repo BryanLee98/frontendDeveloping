@@ -193,10 +193,6 @@ export const USE_BOARD_WRITE = (isEdit: boolean) => {
     fileRef.current?.click()
   }
 
-  // const onClickEnroll = (props: IHandleEnrollProps) => {
-  //   const result = HandleEnroll(props)
-  //   if (!result) return
-  // }
   //버튼을 클릭하면 검증을 해라
   const onClickEnroll = async (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation()

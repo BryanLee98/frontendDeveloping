@@ -9,10 +9,13 @@ import POINT_USAGE_COMPO from "./point-usage/page"
 import CHANGE_PASSWORD_COMPO from "./change-password/changePassword"
 import { useState } from "react"
 import { FloatButton } from "antd"
+import { useQuery } from "@apollo/client"
+import { FetchUserLoggedInDocument } from "@/commons/graphql/graphql"
 
 const MY_PROFILE_COMPO = () => {
   // 0: 거래내역&북마크, 1: 포인트 사용내역, 2: 비밀번호 변경
   const [activeTab, setActiveTab] = useState(0)
+  const { data } = useQuery(FetchUserLoggedInDocument)
 
   return (
     <>
@@ -26,13 +29,13 @@ const MY_PROFILE_COMPO = () => {
             <ul className={styles.userInfoList}>
               <div className={styles.userProfileContainer}>
                 <Image src={profileIcon} alt="프로필 이미지" width={40} height={40} />
-                <li className={styles.userInfoItem}>홍길동</li>
+                <li className={styles.userInfoItem}>{data?.fetchUserLoggedIn.name}</li>
               </div>
 
               <div className={styles.border}> </div>
               <div className={styles.pointContainer}>
                 <Image src={PointIcon} alt="포인트 아이콘" width={20} height={30} />
-                <li className={styles.userInfoItem}>23,000 P</li>
+                <li className={styles.userInfoItem}>{data ? data?.fetchUserLoggedIn.userPoint?.amount : 0} Point</li>
               </div>
             </ul>
             <div className={styles.userItemContainer}>
