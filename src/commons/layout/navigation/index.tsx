@@ -4,9 +4,16 @@ import Image from "next/image"
 import styles from "./styles.module.css"
 import USE_NAVIGATION_HOOK from "./hooks"
 import { AppstoreOutlined, DownOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons"
+import { createFromIconfontCN } from "@ant-design/icons"
 import type { MenuProps } from "antd"
-import { Dropdown, Menu, Space } from "antd"
+import { Button, Menu } from "antd"
+import Menus from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
 import { useNavigationStore } from "@/commons/store/navigation_stores/store"
+import { gql, useMutation, useQuery } from "@apollo/client"
+import { useState } from "react"
+import { FetchUserLoggedInDocument, LogoutUserDocument } from "@/commons/graphql/graphql"
+import { useRouter } from "next/navigation"
 
 const HeaderImageSrc = {
   tripIcon: {
@@ -30,10 +37,28 @@ type NavigationStore = {
 
 type MenuItem = Required<MenuProps>["items"][number]
 
+const IconFont = createFromIconfontCN({
+  scriptUrl: "//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js",
+})
+
 const LAYOUT_NAVIGATION = () => {
+  const router = useRouter()
+  const { data } = useQuery(FetchUserLoggedInDocument)
+  const [logoutUser] = useMutation(LogoutUserDocument)
+
   const { onClickMyPage, onClickTripTalk, onClickShoppingPage } = USE_NAVIGATION_HOOK()
   // const [current, setCurrent] = useState("mail")
   const { current, setCurrent } = useNavigationStore() as NavigationStore
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const items: MenuItem[] = [
     {
       label: (
@@ -61,36 +86,18 @@ const LAYOUT_NAVIGATION = () => {
       ),
     },
   ]
-  const profileItems: MenuProps["items"] = [
-    {
-      key: "1",
-      label: "My Account",
-      disabled: true,
-    },
-    {
-      type: "divider",
-    },
-    {
-      key: "2",
-      label: "Profile",
-      extra: "⌘P",
-    },
-    {
-      key: "3",
-      label: "Billing",
-      extra: "⌘B",
-    },
-    {
-      key: "4",
-      label: "Settings",
-      icon: <SettingOutlined />,
-      extra: "⌘S",
-    },
-  ]
   const onClick: MenuProps["onClick"] = (e) => {
     // console.log("click ", e)
     setCurrent(e.key)
   }
+
+  const onClickLogout = async () => {
+    localStorage.removeItem("accessToken")
+    const result = await logoutUser()
+    console.log(result.data?.logoutUser)
+    router.push("/login")
+  }
+
   return (
     <>
       <div className={styles.Layout}>
@@ -103,19 +110,55 @@ const LAYOUT_NAVIGATION = () => {
             mode="horizontal"
             items={items}
           />
-          <div className={styles.profileNavFrame}>
-            <div className={styles.ProfileWrapper}>
-              <Image src={HeaderImageSrc.profileIcon.src} alt={HeaderImageSrc.profileIcon.alt}></Image>
-              {/* <button> */}
-              <Dropdown menu={{ items }}>
-                <a onClick={(e) => e.preventDefault()}>
-                  <DownOutlined />
-                </a>
-              </Dropdown>
-              {/* <Image src={HeaderImageSrc.downArrow.src} alt={HeaderImageSrc.downArrow.alt}></Image> */}
-              {/* </button> */}
+          {data ? (
+            <div className={styles.profileNavFrame}>
+              <div className={styles.ProfileWrapper}>
+                <Image src={HeaderImageSrc.profileIcon.src} alt={HeaderImageSrc.profileIcon.alt}></Image>
+                <div>
+                  <Button
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                  >
+                    <Image
+                      src={HeaderImageSrc.downArrow.src}
+                      alt={HeaderImageSrc.downArrow.alt}
+                      width={15}
+                      height={15}
+                    />
+                  </Button>
+                  <Menus
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    slotProps={{
+                      list: {
+                        "aria-labelledby": "basic-button",
+                      },
+                    }}
+                  >
+                    <MenuItem onClick={handleClose}>{data ? data.fetchUserLoggedIn.userPoint?.amount : 0} P</MenuItem>
+                    <MenuItem onClick={handleClose}>포인트 충전</MenuItem>
+                    <MenuItem onClick={onClickLogout} style={{ gap: "5px" }}>
+                      <IconFont type="icon-tuichu" />
+                      로그아웃
+                    </MenuItem>
+                  </Menus>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div>
+              <div>
+                <Button shape="round" color="default" size="large">
+                  로그인
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
