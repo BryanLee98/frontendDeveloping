@@ -3,16 +3,14 @@ import "@ant-design/v5-patch-for-react-19"
 import Image from "next/image"
 import styles from "./styles.module.css"
 import USE_NAVIGATION_HOOK from "./hooks"
-import { AppstoreOutlined, DownOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons"
 import { createFromIconfontCN } from "@ant-design/icons"
 import type { MenuProps } from "antd"
 import { Button, Menu } from "antd"
 import Menus from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import { useNavigationStore } from "@/commons/store/navigation_stores/store"
-import { gql, useMutation, useQuery } from "@apollo/client"
-import { useState } from "react"
-import { FetchUserLoggedInDocument, LogoutUserDocument } from "@/commons/graphql/graphql"
+import { useQuery } from "@apollo/client"
+import { FetchUserLoggedInDocument } from "@/commons/graphql/graphql"
 import { useRouter } from "next/navigation"
 
 const HeaderImageSrc = {
@@ -43,21 +41,18 @@ const IconFont = createFromIconfontCN({
 
 const LAYOUT_NAVIGATION = () => {
   const router = useRouter()
+  const {
+    open,
+    anchorEl,
+    onClickMyPage,
+    onClickTripTalk,
+    onClickShoppingPage,
+    handleClick,
+    handleClose,
+    onClickLogout,
+  } = USE_NAVIGATION_HOOK()
   const { data } = useQuery(FetchUserLoggedInDocument)
-  const [logoutUser] = useMutation(LogoutUserDocument)
-
-  const { onClickMyPage, onClickTripTalk, onClickShoppingPage } = USE_NAVIGATION_HOOK()
-  // const [current, setCurrent] = useState("mail")
   const { current, setCurrent } = useNavigationStore() as NavigationStore
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
 
   const items: MenuItem[] = [
     {
@@ -87,15 +82,7 @@ const LAYOUT_NAVIGATION = () => {
     },
   ]
   const onClick: MenuProps["onClick"] = (e) => {
-    // console.log("click ", e)
     setCurrent(e.key)
-  }
-
-  const onClickLogout = async () => {
-    localStorage.removeItem("accessToken")
-    const result = await logoutUser()
-    console.log(result.data?.logoutUser)
-    router.push("/login")
   }
 
   return (
@@ -153,7 +140,7 @@ const LAYOUT_NAVIGATION = () => {
           ) : (
             <div>
               <div>
-                <Button shape="round" color="default" size="large">
+                <Button onClick={() => router.push("/login")} shape="round" color="default" size="large">
                   로그인
                 </Button>
               </div>
