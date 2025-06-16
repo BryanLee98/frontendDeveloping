@@ -2,7 +2,6 @@
 import { Button, Input, Space } from "antd"
 import styles from "./styles.module.css"
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons"
-import { useState } from "react"
 const CHANGE_PASSWORD_COMPO = () => {
   return (
     <>
