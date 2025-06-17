@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/src/components/my-profile/point-usage/point-usage-item/styles.module.css"],"sourcesContent":[".listSection {\n  display: flex;\n  flex-direction: column;\n  border: 1px solid #e0e0e0;\n  border-radius: 8px;\n  padding: 20px;\n}\n\n.table {\n  width: 100%;\n  border-collapse: collapse;\n  margin-top: 20px;\n}\n\n.table th,\n.table td {\n  padding: 12px;\n  text-align: left;\n  border-bottom: 1px solid #ddd;\n}\n\n.table th {\n  background-color: #f8f9fa;\n}\n"],"names":[],"mappings":"AAAA;;;;;;;;AAQA;;;;;;AAMA;;;;;;AAOA"}},
+    {"offset": {"line": 24, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

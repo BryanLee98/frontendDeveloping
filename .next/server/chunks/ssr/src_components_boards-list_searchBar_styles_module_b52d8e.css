@@ -1,0 +1,52 @@
+/* [project]/src/components/boards-list/searchBar/styles.module.css [app-client] (css) */
+.styles-module__WOBZTa__Layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  align-self: stretch;
+}
+
+.styles-module__WOBZTa__mainHeadText {
+  color: gray / 1000;
+  font-family: Pretendard Variable;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.styles-module__WOBZTa__searchBarFrame {
+  display: flex;
+  width: 1080px;
+  max-width: 1680px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 0;
+}
+
+.styles-module__WOBZTa__searchBarInnerBody {
+  width: 100%;
+}
+
+.styles-module__WOBZTa__searchBarContainer {
+  display: flex;
+  padding: 15px 0 0;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.styles-module__WOBZTa__datePicker, .styles-module__WOBZTa__searchBar, .styles-module__WOBZTa__newPost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.styles-module__WOBZTa__searchBar {
+  flex: 1 0 0;
+  justify-content: left;
+}
+
+/*# sourceMappingURL=src_components_boards-list_searchBar_styles_module_b52d8e.css.map*/

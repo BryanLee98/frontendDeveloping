@@ -1,0 +1,370 @@
+/* [project]/src/components/my-profile/styles.module.css [app-client] (css) */
+.styles-module__BvKVSq__Layout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.styles-module__BvKVSq__section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.styles-module__BvKVSq__sectionTitle {
+  font-family: Pretendard Variable;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.styles-module__BvKVSq__userInfoList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  gap: 15px;
+}
+
+.styles-module__BvKVSq__userInfoItem {
+  font-family: Pretendard Variable;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.styles-module__BvKVSq__userItemContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.styles-module__BvKVSq__userProfileContainer {
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.styles-module__BvKVSq__actionLink {
+  color: #007bff;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.styles-module__BvKVSq__border {
+  width: 100%;
+  height: 1px;
+  background: var(--gray-100, #e4e4e4);
+  margin-top: 10px;
+}
+
+.styles-module__BvKVSq__pointContainer {
+  margin: 5px;
+  display: flex;
+  gap: 10px;
+}
+
+.styles-module__BvKVSq__itemList {
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.styles-module__BvKVSq__itemList:hover {
+  border-radius: 3px;
+  background-color: #9393934d;
+}
+
+
+/* [project]/src/components/my-profile/my-trade-list & bookmark/styles.module.css [app-client] (css) */
+.styles-module__dBzdeq__Layout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.styles-module__dBzdeq__searchSwitchSection {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.styles-module__dBzdeq__listSection {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.styles-module__dBzdeq__userInfoList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  gap: 15px;
+}
+
+.styles-module__dBzdeq__userInfoItem {
+  font-family: Pretendard Variable;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.styles-module__dBzdeq__userItemContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.styles-module__dBzdeq__userProfileContainer {
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.styles-module__dBzdeq__actionLink {
+  color: #007bff;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.styles-module__dBzdeq__border {
+  width: 100%;
+  height: 1px;
+  background: var(--gray-100, #e4e4e4);
+  margin-top: 10px;
+}
+
+.styles-module__dBzdeq__pointContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.styles-module__dBzdeq__itemList {
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.styles-module__dBzdeq__itemList:hover {
+  border-radius: 3px;
+  background-color: #9393934d;
+}
+
+.styles-module__dBzdeq__searchBarSelect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.styles-module__dBzdeq__searchBarInnerBody {
+  width: 100%;
+}
+
+.styles-module__dBzdeq__searchBarContainer {
+  display: flex;
+  padding: 15px 0;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+}
+
+.styles-module__dBzdeq__searchBar, .styles-module__dBzdeq__switchButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* [project]/src/components/my-profile/my-trade-list & bookmark/bookmark-item/styles.module.css [app-client] (css) */
+.styles-module__le9h_a__listSection {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.styles-module__le9h_a__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.styles-module__le9h_a__table th, .styles-module__le9h_a__table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.styles-module__le9h_a__table th {
+  background-color: #f8f9fa;
+}
+
+
+/* [project]/src/components/my-profile/my-trade-list & bookmark/trade-list-item/styles.module.css [app-client] (css) */
+.styles-module__sqwRwG__listSection {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.styles-module__sqwRwG__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.styles-module__sqwRwG__table th, .styles-module__sqwRwG__table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.styles-module__sqwRwG__table th {
+  background-color: #f8f9fa;
+}
+
+
+/* [project]/src/components/my-profile/point-usage/styles.module.css [app-client] (css) */
+.styles-module__s5Ldjq__Layout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.styles-module__s5Ldjq__searchSwitchSection {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.styles-module__s5Ldjq__searchBarSelect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.styles-module__s5Ldjq__searchBarInnerBody {
+  width: 100%;
+}
+
+.styles-module__s5Ldjq__searchBarContainer {
+  display: flex;
+  padding: 15px 0;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+}
+
+
+/* [project]/src/components/my-profile/point-usage/point-usage-item/styles.module.css [app-client] (css) */
+.styles-module__zXnz3a__listSection {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.styles-module__zXnz3a__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.styles-module__zXnz3a__table th, .styles-module__zXnz3a__table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.styles-module__zXnz3a__table th {
+  background-color: #f8f9fa;
+}
+
+
+/* [project]/src/components/my-profile/change-password/styles.module.css [app-client] (css) */
+.styles-module__GufHCq__Layout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.styles-module__GufHCq__section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  gap: 30px;
+}
+
+.styles-module__GufHCq__textStyle {
+  color: gray / 800;
+  font-family: Pretendard Variable;
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 24px;
+}
+
+.styles-module__GufHCq__headerText {
+  color: gray / 800;
+  font-family: Pretendard Variable;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.styles-module__GufHCq__essentialFill {
+  color: red;
+}
+
+.styles-module__GufHCq__passwordContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.styles-module__GufHCq__passwordTextFrame {
+  display: flex;
+  flex-direction: row;
+}
+
+.styles-module__GufHCq__passwordButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.styles-module__GufHCq__changePasswordButton {
+  display: flex;
+  justify-content: center;
+}
+
+
+/*# sourceMappingURL=src_components_my-profile_b12c55._.css.map*/

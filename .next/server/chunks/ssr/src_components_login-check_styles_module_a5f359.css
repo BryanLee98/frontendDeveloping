@@ -1,0 +1,57 @@
+/* [project]/src/components/login-check/styles.module.css [app-client] (css) */
+.styles-module__rr89TG__Layout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.styles-module__rr89TG__LoginText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.styles-module__rr89TG__LoginTitle {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.styles-module__rr89TG__LoginHello {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.styles-module__rr89TG__LoginFrame {
+  margin-bottom: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  gap: 20px;
+}
+
+.styles-module__rr89TG__InputContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.styles-module__rr89TG__ImageFrame {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.styles-module__rr89TG__ButtonContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/*# sourceMappingURL=src_components_login-check_styles_module_a5f359.css.map*/

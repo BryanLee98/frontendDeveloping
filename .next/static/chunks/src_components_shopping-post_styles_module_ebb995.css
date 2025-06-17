@@ -1,0 +1,322 @@
+/* [project]/src/components/shopping-post/styles.module.css [app-client] (css) */
+.styles-module__ebzQsW__Layout {
+  gap: 130px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.styles-module__ebzQsW__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.styles-module__ebzQsW__form {
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.styles-module__ebzQsW__fieldGroup {
+  margin: 25px 0;
+}
+
+.styles-module__ebzQsW__label {
+  display: flex;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.styles-module__ebzQsW__required {
+  color: #e74c3c;
+}
+
+.styles-module__ebzQsW__input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f8f9fa;
+  transition: border-color .2s;
+}
+
+.styles-module__ebzQsW__input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  background-color: #fff;
+}
+
+.styles-module__ebzQsW__input::placeholder {
+  color: #999;
+}
+
+.styles-module__ebzQsW__toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px 4px 0 0;
+}
+
+.styles-module__ebzQsW__toolbarBtn {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  border-radius: 2px;
+  transition: background-color .2s;
+}
+
+.styles-module__ebzQsW__toolbarBtn:hover {
+  background-color: #e9ecef;
+}
+
+.styles-module__ebzQsW__textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  font-size: 14px;
+  background-color: #fff;
+  resize: vertical;
+  min-height: 200px;
+  font-family: inherit;
+}
+
+.styles-module__ebzQsW__textarea:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.styles-module__ebzQsW__textarea::placeholder {
+  color: #999;
+}
+
+.styles-module__ebzQsW__locationSection {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.styles-module__ebzQsW__locationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
+.styles-module__ebzQsW__locationFinder {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.styles-module__ebzQsW__addressInput {
+  width: 100px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f8f9fa;
+}
+
+.styles-module__ebzQsW__enrollBorder {
+  width: 100%;
+  height: 1px;
+  background: var(--gray-100, #e4e4e4);
+}
+
+.styles-module__ebzQsW__locationBtn {
+  padding: 8px 16px;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.styles-module__ebzQsW__locationBtn:hover {
+  background-color: #5a6268;
+}
+
+.styles-module__ebzQsW__coordsSection {
+  margin-top: 15px;
+}
+
+.styles-module__ebzQsW__coordsRow {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.styles-module__ebzQsW__coordGroup {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.styles-module__ebzQsW__coordLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.styles-module__ebzQsW__coordInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #e9ecef;
+  color: #6c757d;
+}
+
+.styles-module__ebzQsW__coordInput:disabled {
+  cursor: not-allowed;
+}
+
+.styles-module__ebzQsW__mapPreview {
+  flex: 2;
+}
+
+.styles-module__ebzQsW__mapContainer {
+  width: 100%;
+  height: 170px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styles-module__ebzQsW__mapPlaceholder {
+  color: #999;
+  font-size: 14px;
+}
+
+.styles-module__ebzQsW__fileUpload {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+
+.styles-module__ebzQsW__fileUpload:hover {
+  border-color: #999;
+}
+
+.styles-module__ebzQsW__uploadIcon {
+  font-size: 24px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.styles-module__ebzQsW__uploadText {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
+
+.styles-module__ebzQsW__fileInput {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.styles-module__ebzQsW__buttonGroup {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.styles-module__ebzQsW__cancelBtn {
+  padding: 12px 24px;
+  background-color: #fff;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.styles-module__ebzQsW__cancelBtn:hover {
+  background-color: #f8f9fa;
+}
+
+.styles-module__ebzQsW__submitBtn {
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.styles-module__ebzQsW__submitBtn:hover {
+  background-color: #218838;
+}
+
+@media (width <= 768px) {
+  .styles-module__ebzQsW__container {
+    padding: 15px;
+  }
+
+  .styles-module__ebzQsW__form {
+    padding: 20px;
+  }
+
+  .styles-module__ebzQsW__coordsRow {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .styles-module__ebzQsW__locationHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .styles-module__ebzQsW__buttonGroup {
+    flex-direction: column;
+  }
+
+  .styles-module__ebzQsW__cancelBtn, .styles-module__ebzQsW__submitBtn {
+    width: 100%;
+  }
+}
+
+
+/*# sourceMappingURL=src_components_shopping-post_styles_module_ebb995.css.map*/

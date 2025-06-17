@@ -1,0 +1,35 @@
+/* [project]/src/components/my-profile/point-usage/styles.module.css [app-client] (css) */
+.styles-module__s5Ldjq__Layout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.styles-module__s5Ldjq__searchSwitchSection {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.styles-module__s5Ldjq__searchBarSelect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.styles-module__s5Ldjq__searchBarInnerBody {
+  width: 100%;
+}
+
+.styles-module__s5Ldjq__searchBarContainer {
+  display: flex;
+  padding: 15px 0;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+}
+
+/*# sourceMappingURL=src_components_my-profile_point-usage_styles_module_b52d8e.css.map*/

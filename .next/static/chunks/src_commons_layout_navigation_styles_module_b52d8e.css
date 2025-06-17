@@ -1,0 +1,53 @@
+/* [project]/src/commons/layout/navigation/styles.module.css [app-client] (css) */
+.styles-module___mI_7a__Layout {
+  height: 80px;
+  padding: 20px 100px;
+}
+
+.styles-module___mI_7a__HeaderWrapper {
+  align-items: center;
+  width: 100%;
+}
+
+.styles-module___mI_7a__TapWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  gap: 24px;
+}
+
+.styles-module___mI_7a__TapContents {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  gap: 16px;
+  border-radius: 8px;
+}
+
+.styles-module___mI_7a__TapText {
+  color: var(--gray-800, #333);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.styles-module___mI_7a__Navigation {
+  display: flex;
+  width: 100%;
+}
+
+.styles-module___mI_7a__profileNavFrame {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.styles-module___mI_7a__ProfileWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+/*# sourceMappingURL=src_commons_layout_navigation_styles_module_b52d8e.css.map*/

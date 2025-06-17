@@ -1,0 +1,26 @@
+/* [project]/src/components/my-profile/point-usage/point-usage-item/styles.module.css [app-client] (css) */
+.styles-module__zXnz3a__listSection {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.styles-module__zXnz3a__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.styles-module__zXnz3a__table th, .styles-module__zXnz3a__table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.styles-module__zXnz3a__table th {
+  background-color: #f8f9fa;
+}
+
+/*# sourceMappingURL=src_components_my-profile_point-usage_point-usage-item_styles_module_b52d8e.css.map*/
