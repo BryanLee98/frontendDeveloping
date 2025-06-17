@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/src/app/mylocalfont_2abdd2b8.module.css"],"sourcesContent":["@font-face {\n    font-family: 'myLocalFont';\n    src: url('@vercel/turbopack-next/internal/font/local/font?{%22path%22:%22./fonts/Pretendard-Regular.woff2%22,%22preload%22:true,%22has_size_adjust%22:true}') format('woff2');\n    font-display: swap;\n    \n}\n\n@font-face {\n    font-family: 'myLocalFont Fallback';\n    src: local(\"Arial\");\n    ascent-override: 106.05%;\ndescent-override: 29.35%;\nline-gap-override: 8.98%;\nsize-adjust: 100.00%;\n\n}\n\n.className {\n    font-family: 'myLocalFont', 'myLocalFont Fallback';\n    \n}\n.variable {\n    --Pretendard: 'myLocalFont', 'myLocalFont Fallback';\n}\n\n"],"names":[],"mappings":"AAAA;;;;;;AAOA;;;;;;;;;AAUA;;;;AAIA"}},
-    {"offset": {"line": 23, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
