@@ -1,12 +1,11 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Currently the vercel.app link is not working properly. I'm trying to fix the cors error.
+## 여행 커뮤니티 TripTrip
 
-## Recommend using following step to see the project.
+<img alt="로그인화면" src="https://github.com/user-attachments/assets/8d31479f-f092-4b66-b181-bf2ef0978708" />
 
 ## Getting Started
 
-First install the all dependencies by:
+일단 다음 코드를 입력하여 모든 dependency를 설치합니다.
 
 ```
 npm install
