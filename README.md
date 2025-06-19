@@ -2,6 +2,11 @@
 ## 여행 커뮤니티 TripTrip
 
 <img alt="로그인화면" src="https://github.com/user-attachments/assets/8d31479f-f092-4b66-b181-bf2ef0978708" />
+![스크린샷 2025-06-19 오후 11 12 39](https://github.com/user-attachments/assets/aa9e7d03-a444-43e6-8fbb-e6350e66a446)
+![스크린샷 2025-06-19 오후 11 12 11](https://github.com/user-attachments/assets/e482eede-e641-4e85-9dba-8fb1aa2f99e1)
+![스크린샷 2025-06-19 오후 10 59 51](https://github.com/user-attachments/assets/c6b9a0c3-799a-4d49-b257-ddc00983da16)
+<img alt="스크린샷 2025-05-27 오후 10 37 14" src="https://github.com/user-attachments/assets/8f827158-cb4b-47e8-a9e8-4dbb1f454f4e" />
+
 
 ## Getting Started
 
