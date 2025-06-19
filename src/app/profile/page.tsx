@@ -6,6 +6,7 @@ import MY_PROFILE_COMPO from "@/components/my-profile"
 const MY_PROFILE_PAGE = () => {
   const router = useRouter()
 
+  //로그인 한 사용자에게만 보이도록 예외처리
   useEffect(() => {
     if (localStorage.getItem("accessToken") === null) {
       alert("로그인이 필요합니다.")
