@@ -33,6 +33,7 @@ const PRODUCT_COMMENT_WRITE_COMPO = () => {
       })
       if (data?.createTravelproductQuestion) {
         setQuestion("")
+        console.log(data.createTravelproductQuestion.contents)
         alert("문의가 등록되었습니다.")
       }
     } catch (err) {
@@ -60,7 +61,7 @@ const PRODUCT_COMMENT_WRITE_COMPO = () => {
                 placeholder="문의사항을 입력해 주세요."
                 maxLength={200}
               />
-              <div className={styles.inputTextCount}>/ 200</div>
+              <div className={styles.inputTextCount}>{question.length}/ 200</div>
             </div>
             <div className={styles.buttonBody}>
               {/* <Context.Provider value={contextValue}> */}

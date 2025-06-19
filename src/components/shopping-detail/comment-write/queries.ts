@@ -11,25 +11,6 @@ export const CREATE_TRAVEL_PRODUCT_QUESTION = gql`
     ) {
       _id
       contents
-      travelproduct {
-        _id
-        name
-        remarks
-        contents
-        price
-        tags
-        images
-      }
-      user {
-        _id
-        email
-        name
-        picture
-        userPoint {
-          _id
-          amount
-        }
-      }
       createdAt
       updatedAt
       deletedAt
@@ -48,25 +29,6 @@ export const UPDATE_TRAVEL_PRODUCT_QUESTION = gql`
     ) {
       _id
       contents
-      travelproduct {
-        _id
-        name
-        remarks
-        contents
-        price
-        tags
-        images
-      }
-      user {
-        _id
-        email
-        name
-        picture
-        userPoint {
-          _id
-          amount
-        }
-      }
       createdAt
       updatedAt
       deletedAt

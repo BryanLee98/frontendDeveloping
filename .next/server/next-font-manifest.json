@@ -1,0 +1,27 @@
+{
+  "app": {
+    "[project]/src/app/boards/page": [
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/Pretendard_Regular-s.p.59dc8c3e.woff2"
+    ],
+    "[project]/src/app/login/page": [
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/Pretendard_Regular-s.p.59dc8c3e.woff2"
+    ],
+    "[project]/src/app/_not-found/page": [
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/Pretendard_Regular-s.p.59dc8c3e.woff2"
+    ],
+    "[project]/src/app/shop/page": [
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/Pretendard_Regular-s.p.59dc8c3e.woff2"
+    ],
+    "[project]/src/app/shop/[productId]/page": [
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/Pretendard_Regular-s.p.59dc8c3e.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

@@ -13,6 +13,7 @@ const IMAGES = {
 }
 const PRODUCT_DETAIL_PAGE_COMPO = () => {
   const { data } = USE_PRODUCT_DETAIL_PAGE()
+
   console.log(data?.fetchTravelproduct)
   return (
     <>
