@@ -4,8 +4,17 @@ import USE_SHOPPING_NEW_POST from "./hooks"
 import styles from "./styles.module.css"
 
 const SHOPPING_NEW_POST_COMPO = () => {
-  const { inputs, address, handleInputChange, handleSubmit, toggleLocationFinder, onClickPost, onClickCancel } =
-    USE_SHOPPING_NEW_POST()
+  const {
+    images,
+    inputs,
+    address,
+    handleInputChange,
+    handleSubmit,
+    toggleLocationFinder,
+    onClickPost,
+    onClickCancel,
+    handleFileChange,
+  } = USE_SHOPPING_NEW_POST()
   return (
     <>
       <div className={styles.Layout}>
@@ -18,7 +27,7 @@ const SHOPPING_NEW_POST_COMPO = () => {
             </label>
             <input
               type="text"
-              name="name"
+              id="name"
               value={inputs.name}
               onChange={handleInputChange}
               placeholder="상품명을 입력해 주세요."
@@ -33,7 +42,7 @@ const SHOPPING_NEW_POST_COMPO = () => {
             </label>
             <input
               type="text"
-              name="remarks"
+              id="remarks"
               value={inputs.remarks}
               onChange={handleInputChange}
               placeholder="상품을 한 줄로 요약해주세요."
@@ -85,7 +94,7 @@ const SHOPPING_NEW_POST_COMPO = () => {
               </button>
             </div>
             <textarea
-              name="contents"
+              id="contents"
               value={inputs.contents}
               onChange={handleInputChange}
               placeholder="내용을 입력해 주세요."
@@ -100,12 +109,27 @@ const SHOPPING_NEW_POST_COMPO = () => {
             <label className={styles.label}>
               현재 가격 <span className={styles.required}>*</span>
             </label>
-            <input type="text" placeholder="현째 가격을 입력해 주세요. (원 단위)" className={styles.input} required />
+            <input
+              id="price"
+              value={inputs.price}
+              onChange={handleInputChange}
+              type="text"
+              placeholder="현째 가격을 입력해 주세요. (원 단위)"
+              className={styles.input}
+              required
+            />
           </div>
 
           <div className={styles.fieldGroup}>
             <label className={styles.label}>태그 입력</label>
-            <input type="text" placeholder="태그를 입력해 주세요." className={styles.input} />
+            <input
+              id="tags"
+              value={inputs.tags}
+              onChange={handleInputChange}
+              type="text"
+              placeholder="태그를 입력해 주세요."
+              className={styles.input}
+            />
           </div>
 
           <div className={styles.locationSection}>
@@ -116,11 +140,10 @@ const SHOPPING_NEW_POST_COMPO = () => {
               <div className={styles.locationFinder}>
                 <input
                   type="text"
-                  name="coordinates"
+                  id="zipcode"
                   placeholder="01234"
                   className={styles.addressInput}
-                  value={address.address}
-                  onChange={handleInputChange}
+                  // value={address.address}
                 />
                 <button type="button" className={styles.locationBtn} onClick={toggleLocationFinder}>
                   우편번호 찾기
@@ -128,7 +151,13 @@ const SHOPPING_NEW_POST_COMPO = () => {
               </div>
             </div>
 
-            <input type="text" placeholder="상세주소를 입력해 주세요." className={styles.input} />
+            <input
+              id="addressDetail"
+              // value={address.addressDetail}
+              type="text"
+              placeholder="상세주소를 입력해 주세요."
+              className={styles.input}
+            />
 
             <div className={styles.coordsSection}>
               <div className={styles.coordsRow}>
@@ -140,7 +169,7 @@ const SHOPPING_NEW_POST_COMPO = () => {
                     className={styles.coordInput}
                     value={address.lat}
                     onChange={handleInputChange}
-                    name="latitude"
+                    id="lat"
                   />
                   <label className={styles.coordLabel}>경도(LNG)</label>
                   <input
@@ -149,7 +178,7 @@ const SHOPPING_NEW_POST_COMPO = () => {
                     className={styles.coordInput}
                     value={address.lng}
                     onChange={handleInputChange}
-                    name="longitude"
+                    id="lng"
                   />
                 </div>
 
@@ -168,7 +197,16 @@ const SHOPPING_NEW_POST_COMPO = () => {
             <div className={styles.fileUpload}>
               <div className={styles.uploadIcon}>+</div>
               <span className={styles.uploadText}>클릭하여 사진 업로드</span>
-              <input type="file" className={styles.fileInput} accept="image/*" />
+              {images.map((image, index) => (
+                <div key={index} className={styles.imagePreview}>
+                  <input
+                    onChange={(event) => handleFileChange(event, index)}
+                    type="file"
+                    className={styles.fileInput}
+                    accept="image/*"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 

@@ -12,17 +12,17 @@ const TRADE_LIST_ITEM = () => {
     if (data === undefined) return
     fetchMore({
       variables: {
-        page: Math.ceil((data?.fetchTravelproducts.length ?? 10) / 10) + 1,
+        page: Math.ceil((data?.fetchTravelproductsISold.length ?? 10) / 10) + 1,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult.fetchTravelproducts.length) {
+        if (!fetchMoreResult.fetchTravelproductsISold.length) {
           setHasMore(false)
           return {
-            fetchTravelproducts: [...prev.fetchTravelproducts],
+            fetchTravelproductsISold: [...prev.fetchTravelproductsISold],
           }
         }
         return {
-          fetchTravelproducts: [...prev.fetchTravelproducts, ...fetchMoreResult.fetchTravelproducts],
+          fetchTravelproductsISold: [...prev.fetchTravelproductsISold, ...fetchMoreResult.fetchTravelproductsISold],
         }
       },
     })
@@ -35,7 +35,7 @@ const TRADE_LIST_ITEM = () => {
           next={fetchData}
           hasMore={hasMore}
           loader={<h3 style={{ textAlign: "center" }}>상품 로딩중...</h3>}
-          dataLength={data?.fetchTravelproducts.length ?? 0}
+          dataLength={data?.fetchTravelproductsISold.length ?? 0}
           endMessage={
             <p style={{ textAlign: "center", padding: "20px" }}>
               <b>마지막 상품입니다.</b>
@@ -54,8 +54,8 @@ const TRADE_LIST_ITEM = () => {
             </thead>
 
             <tbody>
-              {(data?.fetchTravelproducts.length ?? 0 > 0) ? (
-                data?.fetchTravelproducts.map((el: any, index: number) => (
+              {(data?.fetchTravelproductsISold.length ?? 0 > 0) ? (
+                data?.fetchTravelproductsISold.map((el: any, index: number) => (
                   <tr key={el._id}>
                     <td style={{ textAlign: "center" }}>{index + 1}</td>
                     <td>{el.name}</td>
